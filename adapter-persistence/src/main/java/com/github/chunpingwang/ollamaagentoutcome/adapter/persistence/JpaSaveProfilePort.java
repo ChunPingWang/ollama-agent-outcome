@@ -11,11 +11,11 @@ import com.github.chunpingwang.ollamaagentoutcome.application.port.out.SaveProfi
  * 使用 JPA 儲存個人資料的 Port 實作。
  */
 @Component
-class JpaSaveProfilePort implements SaveProfilePort {
+public class JpaSaveProfilePort implements SaveProfilePort {
 
     private final ProfileRepository profileRepository;
 
-    JpaSaveProfilePort(ProfileRepository profileRepository) {
+    public JpaSaveProfilePort(ProfileRepository profileRepository) {
         this.profileRepository = profileRepository;
     }
 

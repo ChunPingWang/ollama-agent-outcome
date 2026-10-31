@@ -8,11 +8,11 @@ import com.github.chunpingwang.ollamaagentoutcome.application.port.out.DeletePro
  * 使用 JPA 刪除個人資料的 Port 實作。
  */
 @Component
-class JpaDeleteProfilePort implements DeleteProfilePort {
+public class JpaDeleteProfilePort implements DeleteProfilePort {
 
     private final ProfileRepository profileRepository;
 
-    JpaDeleteProfilePort(ProfileRepository profileRepository) {
+    public JpaDeleteProfilePort(ProfileRepository profileRepository) {
         this.profileRepository = profileRepository;
     }
 

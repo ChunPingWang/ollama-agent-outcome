@@ -14,7 +14,7 @@ import org.springframework.data.domain.Persistable;
  */
 @Entity
 @Table(name = "profiles")
-class ProfileEntity implements Persistable<String> {
+public class ProfileEntity implements Persistable<String> {
 
     @Id
     private String id;

@@ -11,11 +11,11 @@ import com.github.chunpingwang.ollamaagentoutcome.application.port.out.LoadProfi
  * 使用 JPA 載入個人資料的 Port 實作。
  */
 @Component
-class JpaLoadProfilePort implements LoadProfilePort {
+public class JpaLoadProfilePort implements LoadProfilePort {
 
     private final ProfileRepository profileRepository;
 
-    JpaLoadProfilePort(ProfileRepository profileRepository) {
+    public JpaLoadProfilePort(ProfileRepository profileRepository) {
         this.profileRepository = profileRepository;
     }
 
