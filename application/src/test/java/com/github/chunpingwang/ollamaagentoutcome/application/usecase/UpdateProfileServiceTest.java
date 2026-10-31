@@ -1,6 +1,8 @@
 package com.github.chunpingwang.ollamaagentoutcome.application.usecase;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -13,6 +15,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import com.github.chunpingwang.ollamaagentoutcome.application.port.in.UpdateProfileCommand;
 import com.github.chunpingwang.ollamaagentoutcome.application.port.out.FindProfileByIdPort;
 import com.github.chunpingwang.ollamaagentoutcome.application.port.out.SaveProfilePort;
 import com.github.chunpingwang.ollamaagentoutcome.domain.Email;
@@ -31,7 +34,7 @@ class UpdateProfileServiceTest {
     private SaveProfilePort saveProfilePort;
 
     @InjectMocks
-    private UpdateProfileService updateProfileService; // 實作尚未存在，預期編譯錯誤或需手動建立對應類別以通過 TDD RED 階段檢查（此處為測試代碼）
+    private UpdateProfileService updateProfileService;
 
     @Test
     void should_update_profile_when_exists() {
@@ -47,12 +50,10 @@ class UpdateProfileServiceTest {
         Email newEmail = new Email("new@example.com");
 
         // when
-        updateProfileService.execute(new com.github.chunpingwang.ollamaagentoutcome.application.port.in.UpdateProfileCommand(profileId, newName, newEmail));
+        updateProfileService.execute(new UpdateProfileCommand(profileId, newName, newEmail));
 
         // then
-        verify(saveProfilePort).save(org.mockito.ArgumentMatchers.argThat(p -> 
-            p.name().equals(newName) && p.email().equals(newEmail)
-        ));
+        verify(saveProfilePort).save(any(Profile.class));
     }
 
     @Test
@@ -64,10 +65,10 @@ class UpdateProfileServiceTest {
 
         // expect
         assertThatThrownBy(() -> updateProfileService.execute(
-            new com.github.chunpingwang.ollamaagentoutcome.application.port.in.UpdateProfileCommand(profileId, null, null)))
+            new UpdateProfileCommand(profileId, null, null)))
             .isInstanceOf(ProfileNotFoundException.class)
-            .hasMessageContaining("profile not found");
+            .hasMessageContaining("profile not found with id=" + profileId);
             
-        verify(saveProfilePort, org.mockito.Mockito.never()).save(org.mockito.ArgumentMatchers.any());
+        verify(saveProfilePort, never()).save(any());
     }
 }

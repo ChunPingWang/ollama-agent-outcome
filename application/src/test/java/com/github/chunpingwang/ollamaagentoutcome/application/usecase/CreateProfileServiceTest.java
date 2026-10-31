@@ -13,7 +13,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.github.chunpingwang.ollamaagentoutcome.application.port.in.CreateProfileCommand;
-import com.github.chunpingwang.ollamaagentoutcome.application.port.in.CreateProfileUseCase;
 import com.github.chunpingwang.ollamaagentoutcome.application.port.out.SaveProfilePort;
 import com.github.chunpingwang.ollamaagentoutcome.domain.Email;
 import com.github.chunpingwang.ollamaagentoutcome.domain.Name;
@@ -26,7 +25,7 @@ class CreateProfileServiceTest {
     private SaveProfilePort saveProfilePort;
 
     @InjectMocks
-    private CreateProfileService createProfileService; // 實作尚未存在，預期編譯錯誤或需手動建立對應類別以通過 TDD RED 階段檢查（此處為測試代碼）
+    private CreateProfileService createProfileService;
 
     @Test
     void should_create_profile_and_return_id() {

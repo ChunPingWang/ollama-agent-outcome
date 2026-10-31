@@ -11,11 +11,15 @@ import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.github.chunpingwang.ollamaagentoutcome.application.port.out.FindProfileByIdPort;
 import com.github.chunpingwang.ollamaagentoutcome.application.port.out.RemoveProfilePort;
+import com.github.chunpingwang.ollamaagentoutcome.domain.Email;
+import com.github.chunpingwang.ollamaagentoutcome.domain.Name;
+import com.github.chunpingwang.ollamaagentoutcome.domain.Profile;
 import com.github.chunpingwang.ollamaagentoutcome.domain.ProfileId;
 import com.github.chunpingwang.ollamaagentoutcome.domain.ProfileNotFoundException;
 
@@ -28,6 +32,9 @@ class DeleteProfileServiceTest {
     @Mock
     private RemoveProfilePort removeProfilePort;
 
+    @InjectMocks
+    private DeleteProfileService deleteProfileService;
+
     @Test
     void should_throw_exception_when_profile_not_found() {
         // given
@@ -36,13 +43,33 @@ class DeleteProfileServiceTest {
         
         when(findProfileByIdPort.findById(profileId)).thenReturn(Optional.empty());
         
-        var service = new DeleteProfileService(findProfileByIdPort, removeProfilePort);
-
         // expect & verify
-        assertThatThrownBy(() -> service.execute(profileId))
+        assertThatThrownBy(() -> deleteProfileService.execute(profileId))
             .isExactlyInstanceOf(ProfileNotFoundException.class)
             .hasMessageContaining("profile not found with id=" + profileId);
             
         verify(removeProfilePort, never()).removeById(any());
+    }
+
+    @Test
+    void should_remove_profile_when_exists() {
+        // given
+        UUID id = UUID.randomUUID();
+        ProfileId profileId = new ProfileId(id);
+        Name name = new Name("Tester");
+        Email email = new Email("test@example.com");
+        
+        when(findProfileByIdPort.findById(profileId)).thenReturn(java.util.Optional.of(new Profile(
+            profileId, 
+            name, 
+            email
+        )));
+
+        // when
+        deleteProfileService.execute(profileId);
+
+        // then
+        verify(findProfileByIdPort).findById(profileId);
+        verify(removeProfilePort).removeById(profileId);
     }
 }

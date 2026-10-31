@@ -28,7 +28,7 @@ class LoadProfileServiceTest {
     private FindProfileByIdPort findProfileByIdPort;
 
     @InjectMocks
-    private LoadProfileService loadProfileService; // 實作尚未存在，預期編譯錯誤或需手動建立對應類別以通過 TDD RED 階段檢查（此處為測試代碼）
+    private LoadProfileService loadProfileService;
 
     @Test
     void should_load_profile_when_exists() {
@@ -37,6 +37,7 @@ class LoadProfileServiceTest {
         ProfileId profileId = new ProfileId(id);
         Name name = new Name("Tester");
         Email email = new Email("test@example.com");
+        
         when(findProfileByIdPort.findById(profileId)).thenReturn(Optional.of(new Profile(profileId, name, email)));
 
         // when
@@ -57,6 +58,6 @@ class LoadProfileServiceTest {
         // expect
         assertThatThrownBy(() -> loadProfileService.execute(profileId))
             .isInstanceOf(ProfileNotFoundException.class)
-            .hasMessageContaining("profile not found");
+            .hasMessageContaining("profile not found with id=" + profileId);
     }
 }
