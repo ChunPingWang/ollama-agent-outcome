@@ -7,7 +7,7 @@ import com.github.chunpingwang.ollamaagentoutcome.domain.valueobject.ProfileId;
 import com.github.chunpingwang.ollamaagentoutcome.adapter.persistence.repository.ProfileJpaRepository;
 
 /**
- * JPA 實作的刪除個人資料埠。
+ * 使用 JPA 實現 DeleteProfilePort，負責刪除個人資料。
  */
 @Component
 public class JpaDeleteProfilePort implements DeleteProfilePort {
