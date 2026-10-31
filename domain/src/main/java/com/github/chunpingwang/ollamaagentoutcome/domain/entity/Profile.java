@@ -1,6 +1,5 @@
 package com.github.chunpingwang.ollamaagentoutcome.domain.entity;
 
-import com.github.chunpingwang.ollamaagentoutcome.domain.exception.BioTooLongException;
 import com.github.chunpingwang.ollamaagentoutcome.domain.valueobject.Bio;
 import com.github.chunpingwang.ollamaagentoutcome.domain.valueobject.DisplayName;
 import com.github.chunpingwang.ollamaagentoutcome.domain.valueobject.Email;
@@ -36,6 +35,15 @@ public class Profile {
 
     public void changeBio(Bio newBio) {
         this.bio = newBio;
+    }
+
+    /**
+     * 變更電子郵件地址。
+     *
+     * @param newEmail 新的電子郵件值對象
+     */
+    public void changeEmail(Email newEmail) {
+        this.email = newEmail;
     }
 
     public ProfileId getId() { return id; }
