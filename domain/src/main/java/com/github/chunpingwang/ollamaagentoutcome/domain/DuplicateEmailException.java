@@ -8,4 +8,8 @@ public class DuplicateEmailException extends InvalidProfileException {
     public DuplicateEmailException() {
         super("email already exists");
     }
+
+    public DuplicateEmailException(Throwable cause) {
+        super("email already exists", cause);
+    }
 }
