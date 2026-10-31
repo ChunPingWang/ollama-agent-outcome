@@ -2,9 +2,7 @@ package com.github.chunpingwang.ollamaagentoutcome.application.usecase;
 
 import java.util.UUID;
 
-import com.github.chunpingwang.ollamaagentoutcome.domain.DuplicateEmailException;
 import com.github.chunpingwang.ollamaagentoutcome.domain.Email;
-import com.github.chunpingwang.ollamaagentoutcome.domain.InvalidNameException;
 import com.github.chunpingwang.ollamaagentoutcome.domain.Name;
 import com.github.chunpingwang.ollamaagentoutcome.domain.Profile;
 import com.github.chunpingwang.ollamaagentoutcome.domain.ProfileId;
@@ -24,7 +22,6 @@ public class CreateProfileService implements CreateProfileUseCase {
 
     @Override
     public void execute(CreateProfileRequest request) {
-        // 建立值物件，若格式無效會自動拋出 InvalidEmailException / InvalidNameException
         Name name = new Name(request.name());
         Email email = new Email(request.email());
         
@@ -34,10 +31,6 @@ public class CreateProfileService implements CreateProfileUseCase {
             email
         );
         
-        try {
-            saveProfilePort.save(profile);
-        } catch (DuplicateEmailException e) {
-            throw e;
-        }
+        saveProfilePort.save(profile);
     }
 }

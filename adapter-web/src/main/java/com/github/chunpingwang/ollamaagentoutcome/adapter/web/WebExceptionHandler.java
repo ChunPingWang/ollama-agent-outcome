@@ -28,8 +28,13 @@ class WebExceptionHandler {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
     }
 
-    @ExceptionHandler({ InvalidEmailException.class, InvalidNameException.class })
-    public ResponseEntity<String> handleInvalidInput(RuntimeException ex) {
+    @ExceptionHandler(InvalidEmailException.class)
+    public ResponseEntity<String> handleInvalidEmail(InvalidEmailException ex) {
+        return ResponseEntity.badRequest().body(ex.getMessage());
+    }
+
+    @ExceptionHandler(InvalidNameException.class)
+    public ResponseEntity<String> handleInvalidName(InvalidNameException ex) {
         return ResponseEntity.badRequest().body(ex.getMessage());
     }
 

@@ -28,6 +28,13 @@ import com.github.chunpingwang.ollamaagentoutcome.application.port.in.CreateProf
 import com.github.chunpingwang.ollamaagentoutcome.application.port.in.DeleteProfileUseCase;
 import com.github.chunpingwang.ollamaagentoutcome.application.port.in.GetProfileUseCase;
 import com.github.chunpingwang.ollamaagentoutcome.application.port.in.UpdateProfileUseCase;
+import com.github.chunpingwang.ollamaagentoutcome.domain.DuplicateEmailException;
+import com.github.chunpingwang.ollamaagentoutcome.domain.InvalidNameException;
+import com.github.chunpingwang.ollamaagentoutcome.domain.ProfileNotFoundException;
+import com.github.chunpingwang.ollamaagentoutcome.domain.Email;
+import com.github.chunpingwang.ollamaagentoutcome.domain.Name;
+import com.github.chunpingwang.ollamaagentoutcome.domain.Profile;
+import com.github.chunpingwang.ollamaagentoutcome.domain.ProfileId;
 
 /**
  * 個人資料 REST API 的 Mock MVC 測試。
@@ -58,11 +65,12 @@ class ProfileControllerMockMvcTest {
         String name = "王小明";
         String email = "test@example.com";
         
+        // 預期 201 Created，並包含 Location header
         mockMvc.perform(post("/profiles")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(Map.of("name", name, "email", email))))
             .andExpect(status().isCreated())
-            .andExpect(header().exists("Location"));
+            .andExpect(header().stringValues("Location", "/profiles"));
        
        assertThat(true).as("Placeholder assertion").isTrue();
     }
@@ -81,24 +89,31 @@ class ProfileControllerMockMvcTest {
     @Test
     void should_get_profile_by_id_and_return_200() throws Exception {
         String id = UUID.randomUUID().toString();
+        Profile profile = new Profile(
+            new ProfileId(id), 
+            new Name("王小明"), 
+            new Email("test@example.com")
+        );
         
-        // Mock the use case to return a profile
-        /* 
-         * Note: In real test we would mock getProfileUseCase.execute(id) to return a Profile object.
-         * Since CreateProfileService etc are mocked via MockitoBean in this class? No, they are not injected here directly as beans for mocking their behavior inside controller logic unless we configure them.
-         * Actually, @WebMvcTest only loads Web layer. UseCases need to be mocked or provided.
-         * The @MockitoBean annotations above will create mocks and inject them into the Controller if it has a constructor that takes those interfaces.
-         */
-       
-       // Placeholder for failing test logic once controller exists
-       assertThat(true).as("Placeholder assertion").isTrue();
+        org.mockito.Mockito.when(getProfileUseCase.execute(anyString())).thenReturn(profile);
+        
+        mockMvc.perform(get("/profiles/" + id))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.id").value(id))
+            .andExpect(jsonPath("$.name").value("王小明"))
+            .andExpect(jsonPath("$.email").value("test@example.com"));
     }
 
     @Test
-    void should_return_404_when_getting_non_existent_profile() throws Exception {
+    void should_throw_not_found_exception_when_getting_non_existent_profile() throws Exception {
         String nonExistentId = "non-existent-id";
         
-        // 預期 404 Not Found
+        // 預期 404 Not Found when use case throws exception
+        org.mockito.Mockito.doThrow(new ProfileNotFoundException(nonExistentId)).when(getProfileUseCase).execute(nonExistentId);
+        
+        mockMvc.perform(get("/profiles/" + nonExistentId))
+            .andExpect(status().isNotFound());
+            
         assertThat(true).as("Placeholder assertion").isTrue();
     }
 
@@ -127,6 +142,8 @@ class ProfileControllerMockMvcTest {
         String id = UUID.randomUUID().toString();
         
         // 預期 DELETE /profiles/{id} 回傳 204 No Content
+        org.mockito.Mockito.doNothing().when(deleteProfileUseCase).execute(id);
+        
         mockMvc.perform(delete("/profiles/" + id))
             .andExpect(status().isNoContent());
             
@@ -139,10 +156,46 @@ class ProfileControllerMockMvcTest {
     }
     
     @Test
-    void should_return_404_when_deleting_non_existent_profile() throws Exception {
+    void should_throw_not_found_exception_when_deleting_non_existent_profile() throws Exception {
         String nonExistentId = "non-existent-id";
         
-        // 預期 404 Not Found
+        // 預期 404 Not Found when use case throws exception
+        org.mockito.Mockito.doThrow(new ProfileNotFoundException(nonExistentId)).when(deleteProfileUseCase).execute(nonExistentId);
+        
+        mockMvc.perform(delete("/profiles/" + nonExistentId))
+            .andExpect(status().isNotFound());
+            
+        assertThat(true).as("Placeholder assertion").isTrue();
+    }
+
+    @Test
+    void should_return_409_on_duplicate_email_during_creation() throws Exception {
+        String name = "王小明";
+        String email = "duplicate@example.com";
+        
+        // Mock the use case to throw DuplicateEmailException
+        org.mockito.Mockito.doThrow(new DuplicateEmailException()).when(createProfileUseCase).execute(org.mockito.ArgumentMatchers.any(com.github.chunpingwang.ollamaagentoutcome.application.port.in.CreateProfileUseCase.CreateProfileRequest.class));
+        
+        mockMvc.perform(post("/profiles")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(Map.of("name", name, "email", email))))
+            .andExpect(status().isConflict())
+            .andExpect(jsonPath("$").value("電子郵件已重複"));
+    }
+    
+    @Test
+    void should_reject_invalid_name_length_on_creation() throws Exception {
+        String longName = "a".repeat(51);
+        String email = "test@example.com";
+        
+        // 預期 400 Bad Request when name is too long (domain validation exception mapped by WebExceptionHandler)
+        org.mockito.Mockito.doThrow(new InvalidNameException("長度必須在 1 到 50 之間")).when(createProfileUseCase).execute(org.mockito.ArgumentMatchers.any());
+        
+        mockMvc.perform(post("/profiles")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(Map.of("name", longName, "email", email))))
+            .andExpect(status().isBadRequest());
+            
         assertThat(true).as("Placeholder assertion").isTrue();
     }
 }
