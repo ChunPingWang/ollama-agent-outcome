@@ -18,7 +18,8 @@ public class Profile {
     public Profile(ProfileId id, Email email, DisplayName displayName) {
         this.id = Objects.requireNonNull(id, "ID cannot be null");
         this.email = Objects.requireNonNull(email, "Email cannot be null");
-        this.displayName = Objects.requireNonNull(displayName, "Display name cannot be null");
+        // 允許顯示名稱為 null，符合規格中「未設定」的語意
+        this.displayName = displayName;
     }
 
     public void updateDisplayName(DisplayName newDisplayName) {
