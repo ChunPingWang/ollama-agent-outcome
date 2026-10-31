@@ -1,11 +1,44 @@
 package com.github.chunpingwang.ollamaagentoutcome.bootstrap;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-/**
- * 組裝 application 層的 use case。
- * LLM 實作功能時會以 {@code @Bean} 方法把 use case 與 outbound port 實作串起來。
- */
+import com.github.chunpingwang.ollamaagentoutcome.application.port.in.CreateProfileUseCase;
+import com.github.chunpingwang.ollamaagentoutcome.application.port.in.DeleteProfileUseCase;
+import com.github.chunpingwang.ollamaagentoutcome.application.port.in.GetProfileUseCase;
+import com.github.chunpingwang.ollamaagentoutcome.application.port.in.UpdateProfileUseCase;
+import com.github.chunpingwang.ollamaagentoutcome.application.port.out.DeleteProfileByIdPort;
+import com.github.chunpingwang.ollamaagentoutcome.application.port.out.FindProfileByEmailPort;
+import com.github.chunpingwang.ollamaagentoutcome.application.port.out.FindProfileByIdPort;
+import com.github.chunpingwang.ollamaagentoutcome.application.port.out.SaveProfilePort;
+import com.github.chunpingwang.ollamaagentoutcome.application.usecase.CreateProfileService;
+import com.github.chunpingwang.ollamaagentoutcome.application.usecase.DeleteProfileService;
+import com.github.chunpingwang.ollamaagentoutcome.application.usecase.GetProfileService;
+import com.github.chunpingwang.ollamaagentoutcome.application.usecase.UpdateProfileService;
+
 @Configuration
-public class UseCaseConfiguration {
+class UseCaseConfiguration {
+
+    @Bean
+    CreateProfileUseCase createProfileUseCase(SaveProfilePort saveProfilePort, FindProfileByEmailPort findProfileByEmailPort) {
+        return new CreateProfileService(saveProfilePort, findProfileByEmailPort);
+    }
+
+    @Bean
+    GetProfileUseCase getProfileUseCase(FindProfileByIdPort findProfileByIdPort) {
+        return new GetProfileService(findProfileByIdPort);
+    }
+
+    @Bean
+    UpdateProfileUseCase updateProfileUseCase(FindProfileByIdPort findProfileByIdPort,
+                                              FindProfileByEmailPort findProfileByEmailPort,
+                                              SaveProfilePort saveProfilePort) {
+        return new UpdateProfileService(findProfileByIdPort, findProfileByEmailPort, saveProfilePort);
+    }
+
+    @Bean
+    DeleteProfileUseCase deleteProfileUseCase(FindProfileByIdPort findProfileByIdPort,
+                                              DeleteProfileByIdPort deleteProfileByIdPort) {
+        return new DeleteProfileService(findProfileByIdPort, deleteProfileByIdPort);
+    }
 }
