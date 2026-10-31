@@ -7,7 +7,11 @@ import java.util.UUID;
  */
 public class ProfileNotFoundException extends RuntimeException {
 
+    public ProfileNotFoundException(String idValue) {
+        super("找不到 ID 為 " + idValue + " 的個人資料");
+    }
+    
     public ProfileNotFoundException(UUID id) {
-        super("找不到 ID 為 " + id + " 的個人資料");
+        this(id.toString());
     }
 }

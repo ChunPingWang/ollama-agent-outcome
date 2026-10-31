@@ -24,6 +24,9 @@ public final class ProfileId {
         this.value = value;
     }
 
+    /**
+     * 取得底層 UUID 字串表示。
+     */
     public String value() {
         return value;
     }
