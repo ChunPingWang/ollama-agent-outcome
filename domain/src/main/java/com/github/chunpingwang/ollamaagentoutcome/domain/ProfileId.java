@@ -1,0 +1,15 @@
+package com.github.chunpingwang.ollamaagentoutcome.domain;
+
+import java.util.UUID;
+
+/**
+ * 個人資料的唯一識別碼 Value Object。
+ */
+public record ProfileId(UUID value) {
+
+    public ProfileId {
+        if (value == null) {
+            throw new IllegalArgumentException("id must not be null");
+        }
+    }
+}
