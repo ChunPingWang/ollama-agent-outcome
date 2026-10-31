@@ -42,6 +42,7 @@ public class CreateProfileService implements CreateProfileUseCase {
             Bio.of(command.bio())
         );
 
+        // The port returns the saved domain object with updated state (e.g., isNew=false)
         saveProfilePort.save(profile);
     }
 }

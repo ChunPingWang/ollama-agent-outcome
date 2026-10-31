@@ -8,4 +8,8 @@ public class DuplicateEmailException extends RuntimeException {
     public DuplicateEmailException(String email) {
         super("Duplicate email: " + email);
     }
+    
+    public DuplicateEmailException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }

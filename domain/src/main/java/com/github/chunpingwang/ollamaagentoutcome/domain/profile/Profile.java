@@ -4,8 +4,7 @@ import java.time.Instant;
 import java.util.UUID;
 
 /**
- * Profile Aggregate Root，負責領域邏輯與狀態管理。
- * 注意：此類別為純 Domain Object，不依賴任何框架 (Spring/JPA)。
+ * Profile Aggregate Root, responsible for business logic and state management.
  */
 public class Profile {
 
@@ -17,7 +16,7 @@ public class Profile {
     private Instant updatedAt;
     
     /**
-     * JPA Persistable 支援欄位，用於追蹤實體是否已持久化。
+     * Tracks whether the profile is newly created and not yet persisted.
      */
     private transient boolean isNew = true;
 
@@ -46,7 +45,7 @@ public class Profile {
     }
 
     /**
-     * 更新顯示名稱與簡介。Email 不可更改（需透過 Use Case 層處理唯一性檢查）。
+     * Updates display name and bio. Email cannot be changed directly here.
      */
     public void update(DisplayName newDisplayName, Bio newBio) {
         this.displayName = newDisplayName;
@@ -86,16 +85,16 @@ public class Profile {
     // --- Persistable Support Methods ---
 
     /**
-     * 判斷此 Profile 是否為新建立尚未持久化的實體。
+     * Checks if the profile is newly created and not yet persisted.
      */
     public boolean isNew() {
         return isNew;
     }
 
     /**
-     * 標記此 Profile 已非新狀態（通常由 JPA 回載或轉換器呼叫）。
+     * Marks this profile as no longer new (typically called by JPA lifecycle or converter).
      */
-    void markNotNew() {
+    public void markNotNew() {
         this.isNew = false;
     }
 }

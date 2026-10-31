@@ -3,7 +3,6 @@ package com.github.chunpingwang.ollamaagentoutcome.application.usecase;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -55,7 +54,7 @@ class UpdateProfileServiceTest {
         );
         
         when(loadProfilePort.findById(any())).thenReturn(Optional.of(existingProfile));
-        doNothing().when(saveProfilePort).save(any(Profile.class));
+        when(saveProfilePort.save(any(Profile.class))).thenAnswer(invocation -> invocation.getArgument(0));
         
         UpdateProfileCommand command = new UpdateProfileCommand(new com.github.chunpingwang.ollamaagentoutcome.domain.profile.ProfileId(id), currentEmail, newDisplayName, newBio);
 
