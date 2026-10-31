@@ -11,11 +11,11 @@ import com.github.chunpingwang.ollamaagentoutcome.domain.Profile;
  * 使用 JPA 實作的 SaveProfilePort。
  */
 @Component
-class JpaSaveProfilePort implements SaveProfilePort {
+public class JpaSaveProfilePort implements SaveProfilePort {
 
     private final ProfileRepository profileRepository;
 
-    JpaSaveProfilePort(ProfileRepository profileRepository) {
+    public JpaSaveProfilePort(ProfileRepository profileRepository) {
         this.profileRepository = profileRepository;
     }
 

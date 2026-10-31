@@ -12,11 +12,11 @@ import com.github.chunpingwang.ollamaagentoutcome.domain.ProfileId;
  * 使用 JPA 實作的 LoadProfilePort。
  */
 @Component
-class JpaLoadProfilePort implements LoadProfilePort {
+public class JpaLoadProfilePort implements LoadProfilePort {
 
     private final ProfileRepository profileRepository;
 
-    JpaLoadProfilePort(ProfileRepository profileRepository) {
+    public JpaLoadProfilePort(ProfileRepository profileRepository) {
         this.profileRepository = profileRepository;
     }
 

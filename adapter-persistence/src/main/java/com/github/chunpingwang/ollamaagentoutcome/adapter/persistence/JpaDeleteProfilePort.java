@@ -9,11 +9,11 @@ import com.github.chunpingwang.ollamaagentoutcome.domain.ProfileId;
  * 使用 JPA 實作的 DeleteProfilePort。
  */
 @Component
-class JpaDeleteProfilePort implements DeleteProfilePort {
+public class JpaDeleteProfilePort implements DeleteProfilePort {
 
     private final ProfileRepository profileRepository;
 
-    JpaDeleteProfilePort(ProfileRepository profileRepository) {
+    public JpaDeleteProfilePort(ProfileRepository profileRepository) {
         this.profileRepository = profileRepository;
     }
 
