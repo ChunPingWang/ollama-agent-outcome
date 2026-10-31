@@ -25,7 +25,7 @@ public class CreateProfileService implements CreateProfileUseCase {
     }
 
     @Override
-    public void execute(CreateProfileRequest request) {
+    public Profile execute(CreateProfileRequest request) {
         String email = request.email();
         if (existsByEmailPort.existsByEmail(email)) {
             throw new DuplicateEmailException(email);
@@ -37,6 +37,6 @@ public class CreateProfileService implements CreateProfileUseCase {
         Age age = new Age(request.age());
 
         Profile profile = new Profile(id, emailValue, name, age);
-        saveProfilePort.save(profile);
+        return saveProfilePort.save(profile);
     }
 }
