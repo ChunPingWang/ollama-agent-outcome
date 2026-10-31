@@ -12,12 +12,12 @@ import com.github.chunpingwang.ollamaagentoutcome.domain.ProfileNotFoundExceptio
 /**
  * Service implementation for deleting a profile by ID.
  */
-class DeleteProfileService implements DeleteProfileUseCase {
+public class DeleteProfileService implements DeleteProfileUseCase {
 
 	private final LoadProfilePort loadProfilePort;
 	private final RemoveProfilePort removeProfilePort;
 
-	DeleteProfileService(LoadProfilePort loadProfilePort, RemoveProfilePort removeProfilePort) {
+	public DeleteProfileService(LoadProfilePort loadProfilePort, RemoveProfilePort removeProfilePort) {
 		this.loadProfilePort = Objects.requireNonNull(loadProfilePort);
 		this.removeProfilePort = Objects.requireNonNull(removeProfilePort);
 	}

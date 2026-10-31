@@ -10,11 +10,11 @@ import com.github.chunpingwang.ollamaagentoutcome.domain.ProfileId;
 /**
  * Service implementation for creating a new profile.
  */
-class CreateProfileService implements CreateProfileUseCase {
+public class CreateProfileService implements CreateProfileUseCase {
 
 	private final SaveProfilePort saveProfilePort;
 
-	CreateProfileService(SaveProfilePort saveProfilePort) {
+	public CreateProfileService(SaveProfilePort saveProfilePort) {
 		this.saveProfilePort = saveProfilePort;
 	}
 

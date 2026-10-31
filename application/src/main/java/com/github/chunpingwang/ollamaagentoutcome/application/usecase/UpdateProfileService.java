@@ -16,12 +16,12 @@ import com.github.chunpingwang.ollamaagentoutcome.domain.ProfileNotFoundExceptio
 /**
  * Service implementation for updating an existing profile.
  */
-class UpdateProfileService implements UpdateProfileUseCase {
+public class UpdateProfileService implements UpdateProfileUseCase {
 
 	private final LoadProfilePort loadProfilePort;
 	private final SaveProfilePort saveProfilePort;
 
-	UpdateProfileService(LoadProfilePort loadProfilePort, SaveProfilePort saveProfilePort) {
+	public UpdateProfileService(LoadProfilePort loadProfilePort, SaveProfilePort saveProfilePort) {
 		this.loadProfilePort = Objects.requireNonNull(loadProfilePort);
 		this.saveProfilePort = Objects.requireNonNull(saveProfilePort);
 	}

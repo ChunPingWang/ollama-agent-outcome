@@ -10,11 +10,11 @@ import com.github.chunpingwang.ollamaagentoutcome.domain.ProfileId;
 /**
  * Service implementation for retrieving an existing profile by ID.
  */
-class GetProfileService implements GetProfileUseCase {
+public class GetProfileService implements GetProfileUseCase {
 
 	private final LoadProfilePort loadProfilePort;
 
-	GetProfileService(LoadProfilePort loadProfilePort) {
+	public GetProfileService(LoadProfilePort loadProfilePort) {
 		this.loadProfilePort = loadProfilePort;
 	}
 
