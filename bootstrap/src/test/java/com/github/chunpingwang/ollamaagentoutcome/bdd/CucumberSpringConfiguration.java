@@ -1,18 +1,25 @@
 package com.github.chunpingwang.ollamaagentoutcome.bdd;
 
+import com.github.chunpingwang.ollamaagentoutcome.adapter.persistence.JpaDeleteProfilePort;
+import com.github.chunpingwang.ollamaagentoutcome.adapter.persistence.JpaLoadProfilePort;
+import com.github.chunpingwang.ollamaagentoutcome.adapter.persistence.JpaSaveProfilePort;
+import com.github.chunpingwang.ollamaagentoutcome.adapter.persistence.ProfileRepository;
 import com.github.chunpingwang.ollamaagentoutcome.bootstrap.TestcontainersConfiguration;
-import io.cucumber.spring.CucumberContextConfiguration;
-import org.springframework.boot.resttestclient.autoconfigure.AutoConfigureTestRestTemplate;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ActiveProfiles;
 
-/**
- * 讓 Cucumber 步驟類別共用一個 Spring Boot 測試 context（隨機 port + Testcontainers PostgreSQL）。
- * 步驟類別以建構子注入 {@code TestRestTemplate} 呼叫實際 API。
- */
+import io.cucumber.spring.CucumberContextConfiguration;
+
 @CucumberContextConfiguration
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@AutoConfigureTestRestTemplate // Spring Boot 4 不再自動註冊 TestRestTemplate，需明確宣告
-@Import(TestcontainersConfiguration.class)
+@SpringBootTest
+@Import({
+    TestcontainersConfiguration.class,
+    JpaSaveProfilePort.class,
+    JpaLoadProfilePort.class,
+    JpaDeleteProfilePort.class,
+    ProfileRepository.class
+})
+@ActiveProfiles("test")
 public class CucumberSpringConfiguration {
 }
