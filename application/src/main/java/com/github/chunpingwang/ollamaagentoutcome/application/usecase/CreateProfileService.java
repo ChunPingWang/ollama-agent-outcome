@@ -16,7 +16,7 @@ import com.github.chunpingwang.ollamaagentoutcome.application.port.out.SaveProfi
 /**
  * 建立個人資料的使用情境實作。
  */
-class CreateProfileService implements CreateProfileUseCase {
+public class CreateProfileService implements CreateProfileUseCase {
 
     private final ExistsByEmailPort existsByEmailPort;
     private final SaveProfilePort saveProfilePort;

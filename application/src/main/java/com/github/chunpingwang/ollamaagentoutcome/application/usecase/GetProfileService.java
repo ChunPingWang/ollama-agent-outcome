@@ -15,7 +15,7 @@ import com.github.chunpingwang.ollamaagentoutcome.application.port.out.LoadProfi
 /**
  * 查詢個人資料的使用情境實作。
  */
-class GetProfileService implements GetProfileUseCase {
+public class GetProfileService implements GetProfileUseCase {
 
     private final LoadProfilePort loadProfilePort;
 

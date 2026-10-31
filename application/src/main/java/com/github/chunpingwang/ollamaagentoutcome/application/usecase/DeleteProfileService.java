@@ -13,7 +13,7 @@ import com.github.chunpingwang.ollamaagentoutcome.application.port.out.DeletePro
 /**
  * 刪除個人資料的使用情境實作。
  */
-class DeleteProfileService implements DeleteProfileUseCase {
+public class DeleteProfileService implements DeleteProfileUseCase {
 
     private final LoadProfilePort loadProfilePort;
     private final DeleteProfileByIdPort deleteProfileByIdPort;
