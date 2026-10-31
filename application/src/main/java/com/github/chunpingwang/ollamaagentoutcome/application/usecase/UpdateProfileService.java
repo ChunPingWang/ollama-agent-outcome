@@ -28,7 +28,7 @@ class UpdateProfileService implements UpdateProfileUseCase {
     }
 
     @Override
-    public void execute(UpdateProfileCommand command) {
+    public Profile execute(UpdateProfileCommand command) {
         ProfileId profileId = new ProfileId(command.profileId());
         Optional<Profile> existingProfileOpt = loadProfilePort.findById(profileId);
 
@@ -47,6 +47,6 @@ class UpdateProfileService implements UpdateProfileUseCase {
         }
 
         Profile updatedProfile = existingProfile.update(command.name(), newEmail);
-        saveProfilePort.save(updatedProfile);
+        return saveProfilePort.save(updatedProfile);
     }
 }

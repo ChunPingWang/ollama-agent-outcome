@@ -2,7 +2,6 @@ package com.github.chunpingwang.ollamaagentoutcome.application.usecase;
 
 import com.github.chunpingwang.ollamaagentoutcome.domain.DuplicateEmailException;
 import com.github.chunpingwang.ollamaagentoutcome.domain.Email;
-import com.github.chunpingwang.ollamaagentoutcome.domain.InvalidProfileException;
 import com.github.chunpingwang.ollamaagentoutcome.domain.Profile;
 import com.github.chunpingwang.ollamaagentoutcome.domain.ProfileId;
 import com.github.chunpingwang.ollamaagentoutcome.application.port.in.CreateProfileUseCase;
@@ -25,12 +24,12 @@ class CreateProfileService implements CreateProfileUseCase {
     }
 
     @Override
-    public void execute(CreateProfileCommand command) {
+    public Profile execute(CreateProfileCommand command) {
         if (existsByEmailPort.existsByEmail(new Email(command.email()))) {
             throw new DuplicateEmailException("Email already exists: " + command.email());
         }
 
         Profile profile = new Profile(new ProfileId(UUID.randomUUID()), command.name(), new Email(command.email()));
-        saveProfilePort.save(profile);
+        return saveProfilePort.save(profile);
     }
 }
