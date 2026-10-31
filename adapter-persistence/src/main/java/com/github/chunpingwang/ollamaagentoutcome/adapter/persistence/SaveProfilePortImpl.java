@@ -11,7 +11,7 @@ import com.github.chunpingwang.ollamaagentoutcome.application.port.out.SaveProfi
  * Implementation of SaveProfilePort using JPA Repository.
  */
 @Component
-class SaveProfilePortImpl implements SaveProfilePort {
+public class SaveProfilePortImpl implements SaveProfilePort {
 
     private final ProfileJpaRepository repository;
 

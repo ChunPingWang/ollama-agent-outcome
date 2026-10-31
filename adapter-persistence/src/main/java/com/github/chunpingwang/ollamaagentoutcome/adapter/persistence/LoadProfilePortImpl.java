@@ -14,7 +14,7 @@ import com.github.chunpingwang.ollamaagentoutcome.application.port.out.LoadProfi
  * Implementation of LoadProfilePort using JPA Repository.
  */
 @Component
-class LoadProfilePortImpl implements LoadProfilePort {
+public class LoadProfilePortImpl implements LoadProfilePort {
 
     private final ProfileJpaRepository repository;
 
@@ -23,7 +23,7 @@ class LoadProfilePortImpl implements LoadProfilePort {
     }
 
     @Override
-    public Optional<Profile> findById(ProfileId id) {
+    public Optional<Profile> findById(com.github.chunpingwang.ollamaagentoutcome.domain.ProfileId id) {
         return repository.findById(id.value())
                 .map(this::convertToDomain);
     }

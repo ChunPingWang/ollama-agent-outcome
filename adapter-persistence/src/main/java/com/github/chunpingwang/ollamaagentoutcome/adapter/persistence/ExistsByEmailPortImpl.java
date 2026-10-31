@@ -9,7 +9,7 @@ import com.github.chunpingwang.ollamaagentoutcome.application.port.out.ExistsByE
  * Implementation of ExistsByEmailPort using JPA Repository.
  */
 @Component
-class ExistsByEmailPortImpl implements ExistsByEmailPort {
+public class ExistsByEmailPortImpl implements ExistsByEmailPort {
 
     private final ProfileJpaRepository repository;
 
