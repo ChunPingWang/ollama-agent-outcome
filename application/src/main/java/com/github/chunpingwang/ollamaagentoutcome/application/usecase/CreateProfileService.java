@@ -28,7 +28,7 @@ public class CreateProfileService implements CreateProfileUseCase {
         var email = request.email();
 
         if (existsByEmailPort.existsByEmail(email)) {
-            throw new DuplicateEmailException();
+            throw new DuplicateEmailException("Duplicate email");
         }
 
         var id = new ProfileId(java.util.UUID.randomUUID());

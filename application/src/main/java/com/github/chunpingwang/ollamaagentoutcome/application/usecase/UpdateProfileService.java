@@ -1,6 +1,9 @@
 package com.github.chunpingwang.ollamaagentoutcome.application.usecase;
 
-import static java.util.Objects.requireNonNullElse;
+import static java.util.Objects.requireNonNull;
+
+import java.util.Optional;
+
 import com.github.chunpingwang.ollamaagentoutcome.application.port.in.UpdateProfileUseCase;
 import com.github.chunpingwang.ollamaagentoutcome.application.port.in.UpdateProfileUseCase.UpdateProfileRequest;
 import com.github.chunpingwang.ollamaagentoutcome.application.port.out.LoadProfilePort;
@@ -17,30 +20,21 @@ public class UpdateProfileService implements UpdateProfileUseCase {
     private final SaveProfilePort saveProfilePort;
 
     public UpdateProfileService(LoadProfilePort loadProfilePort, SaveProfilePort saveProfilePort) {
-        this.loadProfilePort = requiresNonNull(loadProfilePort, "loadProfilePort must not be null");
-        this.saveProfilePort = requiresNonNull(saveProfilePort, "saveProfilePort must not be null");
+        this.loadProfilePort = requireNonNull(loadProfilePort, "loadProfilePort must not be null");
+        this.saveProfilePort = requireNonNull(saveProfilePort, "saveProfilePort must not be null");
     }
 
     @Override
     public void execute(UpdateProfileRequest request) {
-        var profileOpt = loadProfilePort.findById(request.id());
+        Optional<?> profileOpt = loadProfilePort.findById(request.id());
         
         if (profileOpt.isEmpty()) {
             throw new ProfileNotFoundException(request.id().value());
         }
         
-        var profile = profileOpt.get();
-        // Note: The domain method changeDisplayName might have validation logic inside. 
-        // We pass the displayName from request directly. If it's blank/null and we want to allow clearing or keeping old?
-        // Spec says update display name. Usually implies setting a new value. 
-        // Let's assume DisplayName VO handles null/blank normalization.
+        var profile = (com.github.chunpingwang.ollamaagentoutcome.domain.Profile) profileOpt.get();
         profile.changeDisplayName(request.displayName());
         
         saveProfilePort.save(profile);
-    }
-    
-    private static <T> T requiresNonNull(T obj, String message) {
-        java.util.Objects.requireNonNull(obj, message);
-        return obj;
     }
 }

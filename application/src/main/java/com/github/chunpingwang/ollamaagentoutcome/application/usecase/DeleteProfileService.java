@@ -1,6 +1,9 @@
 package com.github.chunpingwang.ollamaagentoutcome.application.usecase;
 
-import static java.util.Objects.requireNonNullElse;
+import static java.util.Objects.requireNonNull;
+
+import java.util.Optional;
+
 import com.github.chunpingwang.ollamaagentoutcome.application.port.in.DeleteProfileUseCase;
 import com.github.chunpingwang.ollamaagentoutcome.application.port.out.DeleteProfilePort;
 import com.github.chunpingwang.ollamaagentoutcome.application.port.out.LoadProfilePort;
@@ -16,23 +19,18 @@ public class DeleteProfileService implements DeleteProfileUseCase {
     private final DeleteProfilePort deleteProfilePort;
 
     public DeleteProfileService(LoadProfilePort loadProfilePort, DeleteProfilePort deleteProfilePort) {
-        this.loadProfilePort = requiresNonNull(loadProfilePort, "loadProfilePort must not be null");
-        this.deleteProfilePort = requiresNonNull(deleteProfilePort, "deleteProfilePort must not be null");
+        this.loadProfilePort = requireNonNull(loadProfilePort, "loadProfilePort must not be null");
+        this.deleteProfilePort = requireNonNull(deleteProfilePort, "deleteProfilePort must not be null");
     }
 
     @Override
     public void execute(ProfileId id) {
-        var profile = loadProfilePort.findById(id);
+        Optional<?> profileOpt = loadProfilePort.findById(id);
         
-        if (profile.isEmpty()) {
+        if (profileOpt.isEmpty()) {
             throw new ProfileNotFoundException(id.value());
         }
         
         deleteProfilePort.deleteById(id);
-    }
-    
-    private static <T> T requiresNonNull(T obj, String message) {
-        java.util.Objects.requireNonNull(obj, message);
-        return obj;
     }
 }

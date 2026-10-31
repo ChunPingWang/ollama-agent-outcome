@@ -1,6 +1,9 @@
 package com.github.chunpingwang.ollamaagentoutcome.application.usecase;
 
-import static java.util.Objects.requireNonNullElse;
+import static java.util.Objects.requireNonNull;
+
+import java.util.Optional;
+
 import com.github.chunpingwang.ollamaagentoutcome.application.port.in.GetProfileUseCase;
 import com.github.chunpingwang.ollamaagentoutcome.application.port.in.GetProfileUseCase.ProfileResult;
 import com.github.chunpingwang.ollamaagentoutcome.application.port.out.LoadProfilePort;
@@ -15,26 +18,23 @@ public class GetProfileService implements GetProfileUseCase {
     private final LoadProfilePort loadProfilePort;
 
     public GetProfileService(LoadProfilePort loadProfilePort) {
-        this.loadProfilePort = requiresNonNull(loadProfilePort, "loadProfilePort must not be null");
+        this.loadProfilePort = requireNonNull(loadProfilePort, "loadProfilePort must not be null");
     }
 
     @Override
     public ProfileResult execute(ProfileId id) {
-        var profile = loadProfilePort.findById(id);
+        Optional<?> profileOpt = loadProfilePort.findById(id);
         
-        if (profile.isEmpty()) {
+        if (profileOpt.isEmpty()) {
             throw new ProfileNotFoundException(id.value());
         }
         
+        var profile = (com.github.chunpingwang.ollamaagentoutcome.domain.Profile) profileOpt.get();
+        
         return new ProfileResult(
-                profile.get().id(),
-                profile.get().email(),
-                profile.get().displayName()
+                profile.id(),
+                profile.email(),
+                profile.displayName()
         );
-    }
-    
-    private static <T> T requiresNonNull(T obj, String message) {
-        java.util.Objects.requireNonNull(obj, message);
-        return obj;
     }
 }

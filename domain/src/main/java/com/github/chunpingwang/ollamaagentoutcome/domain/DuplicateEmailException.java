@@ -5,7 +5,7 @@ package com.github.chunpingwang.ollamaagentoutcome.domain;
  */
 public class DuplicateEmailException extends RuntimeException {
 
-    public DuplicateEmailException() {
-        super("Duplicate email");
+    public DuplicateEmailException(String message) {
+        super(message);
     }
 }
