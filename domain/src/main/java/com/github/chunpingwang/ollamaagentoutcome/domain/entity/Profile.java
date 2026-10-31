@@ -11,7 +11,7 @@ import com.github.chunpingwang.ollamaagentoutcome.domain.valueobject.ProfileId;
  */
 public class Profile {
     private final ProfileId id;
-    private final Email email;
+    private Email email;
     private DisplayName displayName;
     private Bio bio;
 
@@ -41,6 +41,18 @@ public class Profile {
      */
     public Email getEmail() {
         return email;
+    }
+
+    /**
+     * 更新電子郵件地址。
+     *
+     * @param email 新的電子郵件值物件
+     */
+    public void setEmail(Email email) {
+        if (email == null) {
+            throw new InvalidEmailException("Invalid email address: cannot be empty or blank");
+        }
+        this.email = email;
     }
 
     /**
