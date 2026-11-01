@@ -1,14 +1,13 @@
 package com.github.chunpingwang.ollamaagentoutcome.application.usecase;
 
 
-
 import com.github.chunpingwang.ollamaagentoutcome.domain.Profile;
 import com.github.chunpingwang.ollamaagentoutcome.application.port.in.GetProfileUseCase;
 import com.github.chunpingwang.ollamaagentoutcome.application.port.out.LoadProfilePort;
 import java.util.Optional;
 
 /**
- * 查詢個人資料的應用層服務實作。
+ * 查詢個人資料的應用層服務實作。若找不到則回傳空 Optional。
  */
 public class GetProfileService implements GetProfileUseCase {
 
@@ -19,10 +18,10 @@ public class GetProfileService implements GetProfileUseCase {
     }
 
     /**
-     * 根據識別碼查詢個人資料。
+     * 根據識別碼查詢個人資料。直接將 Port 的結果向上傳遞，由 Controller 決定是否拋出例外。
      */
     @Override
-    public Optional<com.github.chunpingwang.ollamaagentoutcome.domain.Profile> execute(String id) {
+    public Optional<Profile> execute(String id) {
         return loadProfilePort.findById(id);
     }
 }

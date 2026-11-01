@@ -3,7 +3,7 @@ package com.github.chunpingwang.ollamaagentoutcome.application.port.out;
 import com.github.chunpingwang.ollamaagentoutcome.domain.Profile;
 
 /**
- * 儲存個人資料的外向端口 (Outbound Port)。
+ * 儲存個人資料的外向 Port 介面。
  */
 public interface SaveProfilePort {
 

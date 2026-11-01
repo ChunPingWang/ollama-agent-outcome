@@ -22,7 +22,7 @@ public class UpdateProfileService implements UpdateProfileUseCase {
     }
 
     /**
-     * 執行更新個人資料的業務流程。
+     * 執行更新個人資料的業務流程。先載入、更新狀態，再儲存。
      */
     @Override
     public void execute(UpdateProfileRequest request, String id) {
@@ -36,6 +36,7 @@ public class UpdateProfileService implements UpdateProfileUseCase {
             ? new DisplayName(request.displayName()) 
             : new DisplayName("");
             
+        // Modify the existing domain object state directly as per test expectations
         profileOpt.get().update(email, displayName);
         saveProfilePort.save(profileOpt.get());
     }
