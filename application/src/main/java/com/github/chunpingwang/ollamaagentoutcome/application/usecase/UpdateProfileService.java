@@ -23,6 +23,7 @@ public class UpdateProfileService implements UpdateProfileUseCase {
     @Override
     public void execute(UpdateRequest request, String id) {
         var profileOpt = loadProfilePort.findById(id);
+        
         if (profileOpt.isEmpty()) {
             throw new ProfileNotFoundException(id);
         }
