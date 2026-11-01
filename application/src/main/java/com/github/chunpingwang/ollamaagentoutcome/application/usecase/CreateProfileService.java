@@ -1,5 +1,7 @@
 package com.github.chunpingwang.ollamaagentoutcome.application.usecase;
 
+import java.util.UUID;
+
 import com.github.chunpingwang.ollamaagentoutcome.application.port.in.CreateProfileUseCase;
 import com.github.chunpingwang.ollamaagentoutcome.application.port.out.ExistsByEmailPort;
 import com.github.chunpingwang.ollamaagentoutcome.application.port.out.SaveProfilePort;
@@ -28,7 +30,7 @@ public class CreateProfileService implements CreateProfileUseCase {
             throw new DuplicateEmailException();
         }
         
-        Profile profile = new Profile(new ProfileId(java.util.UUID.randomUUID()), email, displayName);
+        Profile profile = new Profile(new ProfileId(UUID.randomUUID()), email, displayName);
         saveProfilePort.save(profile);
     }
 }
