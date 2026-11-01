@@ -1,0 +1,11 @@
+package com.github.chunpingwang.ollamaagentoutcome.domain;
+
+/**
+ * 當嘗試使用已存在的電子郵件建立個人資料時拋出的例外。
+ */
+public class DuplicateEmailException extends RuntimeException {
+
+    public DuplicateEmailException() {
+        super("Email already exists");
+    }
+}
