@@ -2,13 +2,13 @@ package com.github.chunpingwang.ollamaagentoutcome.application.usecase;
 
 
 
+
+
 import static org.mockito.Mockito.*;
 import static org.assertj.core.api.Assertions.*;import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
-
-import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,10 +19,7 @@ import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
 import com.github.chunpingwang.ollamaagentoutcome.domain.DuplicateEmailException;
-import com.github.chunpingwang.ollamaagentoutcome.domain.DisplayName;
-import com.github.chunpingwang.ollamaagentoutcome.domain.Email;
 import com.github.chunpingwang.ollamaagentoutcome.domain.Profile;
-import com.github.chunpingwang.ollamaagentoutcome.domain.ProfileId;
 import com.github.chunpingwang.ollamaagentoutcome.application.port.out.SaveProfilePort;
 
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -37,11 +34,10 @@ class CreateProfileServiceTest {
 
     @Test
     void should_create_profile_and_save_when_valid() {
-        String id = UUID.randomUUID().toString();
         String emailAddr = "test@example.com";
         String displayNameStr = "Test User";
 
-        // Act & Assert: 驗證不會拋出例外，且 port 被呼叫
+        // Act & Assert: 驗證不會拋出例外，且 port 被呼叫一次
         createProfileService.execute(emailAddr, displayNameStr);
 
         verify(saveProfilePort).save(any(Profile.class));

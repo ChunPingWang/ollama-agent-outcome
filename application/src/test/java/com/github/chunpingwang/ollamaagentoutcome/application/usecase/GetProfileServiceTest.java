@@ -2,10 +2,8 @@ package com.github.chunpingwang.ollamaagentoutcome.application.usecase;
 
 
 
+import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
-import static org.assertj.core.api.Assertions.*;import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -51,13 +49,13 @@ class GetProfileServiceTest {
     }
 
     @Test
-    void should_throw_exception_when_not_found() {
+    void should_return_empty_when_not_found() {
         String id = "non-existent-id";
 
         when(loadProfilePort.findById(id)).thenReturn(Optional.empty());
 
-        var result = getProfileService.execute(id);
-        
+        Optional<Profile> result = getProfileService.execute(id);
+
         assertThat(result).isEmpty();
         verify(loadProfilePort).findById(id);
     }
