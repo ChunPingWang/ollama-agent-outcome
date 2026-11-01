@@ -5,6 +5,7 @@ import com.github.chunpingwang.ollamaagentoutcome.domain.Email;
 import com.github.chunpingwang.ollamaagentoutcome.domain.DisplayName;
 import com.github.chunpingwang.ollamaagentoutcome.domain.Profile;
 import com.github.chunpingwang.ollamaagentoutcome.domain.ProfileId;
+import com.github.chunpingwang.ollamaagentoutcome.application.port.in.CreateProfileUseCase;
 import com.github.chunpingwang.ollamaagentoutcome.application.port.out.SaveProfilePort;
 
 import java.util.Objects;
@@ -13,7 +14,7 @@ import java.util.UUID;
 /**
  * 建立個人資料的 Use Case 實作。
  */
-class CreateProfileService implements com.github.chunpingwang.ollamaagentoutcome.application.port.in.CreateProfileUseCase {
+public class CreateProfileService implements CreateProfileUseCase {
 
     private final SaveProfilePort saveProfilePort;
 
@@ -22,7 +23,7 @@ class CreateProfileService implements com.github.chunpingwang.ollamaagentoutcome
      *
      * @param saveProfilePort 儲存 Port
      */
-    CreateProfileService(SaveProfilePort saveProfilePort) {
+    public CreateProfileService(SaveProfilePort saveProfilePort) {
         this.saveProfilePort = Objects.requireNonNull(saveProfilePort, "saveProfilePort must not be null");
     }
 

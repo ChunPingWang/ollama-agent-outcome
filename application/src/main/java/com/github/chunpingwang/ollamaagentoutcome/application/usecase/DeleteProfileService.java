@@ -13,7 +13,7 @@ import java.util.UUID;
 /**
  * 刪除個人資料的 Use Case 實作。
  */
-class DeleteProfileService implements DeleteProfileUseCase {
+public class DeleteProfileService implements DeleteProfileUseCase {
 
     private final LoadProfilePort loadProfilePort;
     private final DeleteProfilePort deleteProfilePort;
@@ -24,7 +24,7 @@ class DeleteProfileService implements DeleteProfileUseCase {
      * @param loadProfilePort   載入 Port
      * @param deleteProfilePort 刪除 Port
      */
-    DeleteProfileService(LoadProfilePort loadProfilePort, DeleteProfilePort deleteProfilePort) {
+    public DeleteProfileService(LoadProfilePort loadProfilePort, DeleteProfilePort deleteProfilePort) {
         this.loadProfilePort = Objects.requireNonNull(loadProfilePort, "loadProfilePort must not be null");
         this.deleteProfilePort = Objects.requireNonNull(deleteProfilePort, "deleteProfilePort must not be null");
     }
