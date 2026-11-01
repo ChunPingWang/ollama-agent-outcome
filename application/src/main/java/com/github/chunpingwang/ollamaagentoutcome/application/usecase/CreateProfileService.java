@@ -9,7 +9,6 @@ import com.github.chunpingwang.ollamaagentoutcome.domain.DisplayName;
 import com.github.chunpingwang.ollamaagentoutcome.domain.DuplicateEmailException;
 import com.github.chunpingwang.ollamaagentoutcome.domain.Email;
 import com.github.chunpingwang.ollamaagentoutcome.domain.Profile;
-import com.github.chunpingwang.ollamaagentoutcome.domain.ProfileId;
 
 /**
  * 建立個人資料的應用服務實作。
