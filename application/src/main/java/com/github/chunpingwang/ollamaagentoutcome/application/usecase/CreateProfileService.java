@@ -2,9 +2,9 @@ package com.github.chunpingwang.ollamaagentoutcome.application.usecase;
 
 import com.github.chunpingwang.ollamaagentoutcome.application.port.in.CreateProfileUseCase;
 import com.github.chunpingwang.ollamaagentoutcome.application.port.out.SaveProfilePort;
-import com.github.chunpingwang.ollamaagentoutcome.domain.Profile;
-import com.github.chunpingwang.ollamaagentoutcome.domain.Email;
 import com.github.chunpingwang.ollamaagentoutcome.domain.DisplayName;
+import com.github.chunpingwang.ollamaagentoutcome.domain.Email;
+import com.github.chunpingwang.ollamaagentoutcome.domain.Profile;
 import com.github.chunpingwang.ollamaagentoutcome.domain.ProfileId;
 
 import java.util.UUID;
@@ -21,8 +21,8 @@ public class CreateProfileService implements CreateProfileUseCase {
     }
 
     @Override
-    public void execute(Email email, DisplayName displayName) {
+    public Profile execute(Email email, DisplayName displayName) {
         Profile profile = new Profile(new ProfileId(UUID.randomUUID()), email, displayName);
-        saveProfilePort.save(profile);
+        return saveProfilePort.save(profile);
     }
 }

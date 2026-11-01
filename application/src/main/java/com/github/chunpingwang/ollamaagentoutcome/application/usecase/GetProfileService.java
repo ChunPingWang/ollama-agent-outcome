@@ -5,6 +5,7 @@ import com.github.chunpingwang.ollamaagentoutcome.application.port.out.LoadProfi
 import com.github.chunpingwang.ollamaagentoutcome.domain.Profile;
 import com.github.chunpingwang.ollamaagentoutcome.domain.ProfileId;
 
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -15,7 +16,7 @@ public class GetProfileService implements GetProfileUseCase {
     private final LoadProfilePort loadProfilePort;
 
     public GetProfileService(LoadProfilePort loadProfilePort) {
-        this.loadProfilePort = loadProfilePort;
+        this.loadProfilePort = Objects.requireNonNull(loadProfilePort);
     }
 
     @Override
