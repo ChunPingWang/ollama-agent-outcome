@@ -1,0 +1,11 @@
+package com.github.chunpingwang.ollamaagentoutcome.bootstrap;
+
+import org.springframework.context.annotation.Configuration;
+
+/**
+ * 組裝 application 層的 use case。
+ * LLM 實作功能時會以 {@code @Bean} 方法把 use case 與 outbound port 實作串起來。
+ */
+@Configuration
+public class UseCaseConfiguration {
+}
