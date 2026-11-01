@@ -3,8 +3,13 @@ package com.github.chunpingwang.ollamaagentoutcome.application.port.out;
 import com.github.chunpingwang.ollamaagentoutcome.domain.Profile;
 
 /**
- * Outbound port for persisting or updating a profile entity.
+ * Outbound port for saving a profile entity to persistence storage.
  */
 public interface SaveProfilePort {
-    void save(Profile profile);
+    /**
+     * Saves the given domain Profile.
+     * @param profile the profile to save
+     * @return the saved profile (may be updated with generated IDs or timestamps if applicable, though here it's mostly void-like in effect for UUIDs)
+     */
+    Profile save(Profile profile);
 }

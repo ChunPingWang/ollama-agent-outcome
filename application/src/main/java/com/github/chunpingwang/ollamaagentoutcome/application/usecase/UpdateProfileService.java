@@ -1,32 +1,22 @@
 package com.github.chunpingwang.ollamaagentoutcome.application.usecase;
 
+
+import com.github.chunpingwang.ollamaagentoutcome.domain.Profile;
+import com.github.chunpingwang.ollamaagentoutcome.domain.DisplayName;
+import com.github.chunpingwang.ollamaagentoutcome.domain.Email;
+import com.github.chunpingwang.ollamaagentoutcome.domain.ProfileNotFoundException;
 import com.github.chunpingwang.ollamaagentoutcome.application.port.in.UpdateProfileUseCase;
 import com.github.chunpingwang.ollamaagentoutcome.application.port.out.FindProfileByIdPort;
 import com.github.chunpingwang.ollamaagentoutcome.application.port.out.SaveProfilePort;
-import com.github.chunpingwang.ollamaagentoutcome.domain.DisplayName;
-import com.github.chunpingwang.ollamaagentoutcome.domain.Email;
-import com.github.chunpingwang.ollamaagentoutcome.domain.Profile;
-import com.github.chunpingwang.ollamaagentoutcome.domain.ProfileId;
-import com.github.chunpingwang.ollamaagentoutcome.domain.ProfileNotFoundException;
-
-import java.util.Optional;
-import java.util.UUID;
 
 /**
  * Service implementation for updating an existing user profile.
- * Validates existence, updates fields via domain entity method, and persists changes.
  */
-class UpdateProfileService implements UpdateProfileUseCase {
+public class UpdateProfileService implements UpdateProfileUseCase {
 
     private final FindProfileByIdPort findProfileByIdPort;
     private final SaveProfilePort saveProfilePort;
 
-    /**
-     * Constructs an UpdateProfileService with the given ports.
-     *
-     * @param findProfileByIdPort the port used to fetch profiles by ID
-     * @param saveProfilePort     the port used to persist profile changes
-     */
     public UpdateProfileService(FindProfileByIdPort findProfileByIdPort, SaveProfilePort saveProfilePort) {
         this.findProfileByIdPort = findProfileByIdPort;
         this.saveProfilePort = saveProfilePort;
@@ -34,24 +24,27 @@ class UpdateProfileService implements UpdateProfileUseCase {
 
     @Override
     public void execute(UpdateProfileCommand command) {
-        UUID id = command.id();
-        
-        // Check if profile exists
-        Optional<Profile> optionalProfile = findProfileByIdPort.findById(id);
-        if (optionalProfile.isEmpty()) {
-            throw new ProfileNotFoundException(id);
+        if (findProfileByIdPort.findById(command.id()).isEmpty()) {
+            throw new ProfileNotFoundException(command.id());
         }
         
-        Profile profile = optionalProfile.get();
-        
-        // Validate input data using Value Objects before updating
         Email newEmail = new Email(command.email());
         DisplayName newDisplayName = new DisplayName(command.displayName());
         
-        // Update domain entity state
+        // Note: In a real scenario with optimistic locking or strict entity management, 
+        // we might fetch the managed entity first to update it in place. 
+        // However, based on current Port design (save takes domain object), 
+        // and assuming the port handles merge logic or we pass the full updated state:
+        // Since we don't have the old email here without fetching again, and spec says "update",
+        // typically we need the existing entity. But for simplicity of this specific task fix,
+        // we assume the Service constructs the update payload. 
+        // To strictly follow "fetch then update" pattern implied by persistence traps:
+        var profileOpt = findProfileByIdPort.findById(command.id());
+        if (profileOpt.isEmpty()) {
+             throw new ProfileNotFoundException(command.id());
+        }
+        Profile profile = profileOpt.get();
         profile.update(newEmail, newDisplayName);
-        
-        // Persist updated profile
         saveProfilePort.save(profile);
     }
 }

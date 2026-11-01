@@ -3,6 +3,7 @@ package com.github.chunpingwang.ollamaagentoutcome.application.usecase;
 
 
 
+
 import static org.mockito.Mockito.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -24,8 +25,8 @@ import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
 import com.github.chunpingwang.ollamaagentoutcome.domain.DuplicateEmailException;
-import com.github.chunpingwang.ollamaagentoutcome.domain.Email;
 import com.github.chunpingwang.ollamaagentoutcome.domain.DisplayName;
+import com.github.chunpingwang.ollamaagentoutcome.domain.Email;
 import com.github.chunpingwang.ollamaagentoutcome.domain.Profile;
 import com.github.chunpingwang.ollamaagentoutcome.domain.ProfileId;
 import com.github.chunpingwang.ollamaagentoutcome.domain.ProfileNotFoundException;
@@ -59,7 +60,7 @@ class UpdateProfileServiceTest {
         );
         
         when(findProfileByIdPort.findById(id)).thenReturn(Optional.of(existingProfile));
-        doNothing().when(saveProfilePort).save(any(Profile.class));
+        when(saveProfilePort.save(any(Profile.class))).thenReturn(existingProfile);
 
         // when & then
         assertThatNoException().isThrownBy(() -> 
