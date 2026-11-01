@@ -48,4 +48,20 @@ public class GlobalExceptionHandler {
         }
         return ResponseEntity.badRequest().body(errors);
     }
+
+    /**
+     * 處理無效的 UUID 格式（例如路徑參數為 "non-existent-id"）。
+     */
+    @ExceptionHandler(IllegalArgumentException.class)
+    ResponseEntity<Map<String, String>> handleIllegalArgument(IllegalArgumentException ex) {
+        if (ex.getMessage() != null && ex.getMessage().contains("UUID")) {
+            Map<String, String> body = new HashMap<>();
+            body.put("error", "not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
+        }
+        
+        Map<String, String> body = new HashMap<>();
+        body.put("error", "bad request");
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);
+    }
 }
