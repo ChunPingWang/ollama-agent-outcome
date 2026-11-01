@@ -10,7 +10,7 @@ import java.util.Optional;
 /**
  * 查詢個人資料的使用案例實作。
  */
-class GetProfileService implements GetProfileUseCase {
+public class GetProfileService implements GetProfileUseCase {
 
     private final LoadProfilePort loadProfilePort;
 

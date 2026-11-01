@@ -13,7 +13,7 @@ import java.util.Optional;
 /**
  * 刪除個人資料的使用案例實作。
  */
-class DeleteProfileService implements DeleteProfileUseCase {
+public class DeleteProfileService implements DeleteProfileUseCase {
 
     private final LoadProfilePort loadProfilePort;
     private final DeleteProfilePort deleteProfilePort;

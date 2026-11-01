@@ -15,7 +15,7 @@ import java.util.Optional;
 /**
  * 更新個人資料的使用案例實作。
  */
-class UpdateProfileService implements UpdateProfileUseCase {
+public class UpdateProfileService implements UpdateProfileUseCase {
 
     private final LoadProfilePort loadProfilePort;
     private final SaveProfilePort saveProfilePort;
