@@ -20,6 +20,10 @@ public class GetProfileService implements GetProfileUseCase {
 
     @Override
     public Optional<Profile> execute(String id) {
-        return loadProfilePort.findById(id);
+        var profileOpt = loadProfilePort.findById(id);
+        if (profileOpt.isEmpty()) {
+            throw new ProfileNotFoundException(id);
+        }
+        return profileOpt;
     }
 }

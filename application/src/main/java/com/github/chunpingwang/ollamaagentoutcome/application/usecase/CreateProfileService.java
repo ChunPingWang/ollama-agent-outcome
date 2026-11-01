@@ -32,6 +32,8 @@ public class CreateProfileService implements CreateProfileUseCase {
             new DisplayName(request.displayName())
         );
         
+        // Port implementation is responsible for throwing DuplicateEmailException if constraint violated.
+        // This service simply propagates it by not catching it.
         saveProfilePort.save(profile);
     }
 
