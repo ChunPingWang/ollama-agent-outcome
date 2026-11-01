@@ -1,0 +1,43 @@
+package com.github.chunpingwang.ollamaagentoutcome.application.usecase;
+
+
+import com.github.chunpingwang.ollamaagentoutcome.application.port.out.LoadProfilePort;
+import com.github.chunpingwang.ollamaagentoutcome.application.port.in.UpdateProfileUseCase;
+import com.github.chunpingwang.ollamaagentoutcome.application.port.out.SaveProfilePort;
+import com.github.chunpingwang.ollamaagentoutcome.domain.DisplayName;
+import com.github.chunpingwang.ollamaagentoutcome.domain.Email;
+import com.github.chunpingwang.ollamaagentoutcome.domain.ProfileNotFoundException;
+
+/**
+ * 更新個人資料的應用層服務實作。
+ */
+public class UpdateProfileService implements UpdateProfileUseCase {
+
+    private final LoadProfilePort loadProfilePort;
+    private final SaveProfilePort saveProfilePort;
+
+    public UpdateProfileService(LoadProfilePort loadProfilePort, SaveProfilePort saveProfilePort) {
+        this.loadProfilePort = loadProfilePort;
+        this.saveProfilePort = saveProfilePort;
+    }
+
+    /**
+     * 執行更新個人資料的業務流程。先載入、更新狀態，再儲存。
+     */
+    @Override
+    public void execute(UpdateProfileRequest request, String id) {
+        var profileOpt = loadProfilePort.findById(id);
+        if (profileOpt.isEmpty()) {
+            throw new ProfileNotFoundException(id);
+        }
+        
+        Email email = new Email(request.email());
+        DisplayName displayName = (request.displayName() != null && !request.displayName().isBlank()) 
+            ? new DisplayName(request.displayName()) 
+            : new DisplayName("");
+            
+        // Modify the existing domain object state directly as per test expectations
+        profileOpt.get().update(email, displayName);
+        saveProfilePort.save(profileOpt.get());
+    }
+}
