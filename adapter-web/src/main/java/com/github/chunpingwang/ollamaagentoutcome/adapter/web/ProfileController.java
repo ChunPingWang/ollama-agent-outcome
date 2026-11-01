@@ -23,6 +23,7 @@ import com.github.chunpingwang.ollamaagentoutcome.application.port.in.DeleteProf
 import com.github.chunpingwang.ollamaagentoutcome.application.port.in.GetProfileUseCase;
 import com.github.chunpingwang.ollamaagentoutcome.application.port.in.UpdateProfileUseCase;
 import com.github.chunpingwang.ollamaagentoutcome.domain.ProfileId;
+import com.github.chunpingwang.ollamaagentoutcome.domain.ProfileNotFoundException;
 
 /**
  * 個人資料 REST Controller。
@@ -61,23 +62,38 @@ public class ProfileController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProfileResponse> getById(@PathVariable("id") UUID id) {
-        var profile = getProfileUseCase.findById(new ProfileId(id));
-        return ResponseEntity.ok(toResponse(profile));
+    public ResponseEntity<ProfileResponse> getById(@PathVariable("id") String idStr) {
+        try {
+            UUID id = UUID.fromString(idStr);
+            var profile = getProfileUseCase.findById(new ProfileId(id));
+            return ResponseEntity.ok(toResponse(profile));
+        } catch (IllegalArgumentException e) {
+            throw new ProfileNotFoundException(UUID.randomUUID().toString() + " - invalid format"); 
+            // Throwing a generic not found to trigger 404 for bad IDs as per spec requirement for non-existent
+        }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@PathVariable("id") UUID id, 
+    public ResponseEntity<Void> update(@PathVariable("id") String idStr, 
                                        @Valid @RequestBody UpdateProfileRequest request) {
-        updateProfileUseCase.execute(new ProfileId(id), request.getEmail(), request.getDisplayName());
-        // 修正：更新操作應回傳 200 OK 以符合 Spec 與測試預期（原為 noContent/204）
-        return ResponseEntity.ok().build();
+        try {
+             UUID id = UUID.fromString(idStr);
+             updateProfileUseCase.execute(new ProfileId(id), request.getEmail(), request.getDisplayName());
+             return ResponseEntity.ok().build();
+        } catch (IllegalArgumentException e) {
+             throw new ProfileNotFoundException(UUID.randomUUID().toString() + " - invalid format");
+        }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable("id") UUID id) {
-        deleteProfileUseCase.execute(new ProfileId(id));
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<Void> delete(@PathVariable("id") String idStr) {
+        try {
+             UUID id = UUID.fromString(idStr);
+             deleteProfileUseCase.execute(new ProfileId(id));
+             return ResponseEntity.noContent().build();
+        } catch (IllegalArgumentException e) {
+             throw new ProfileNotFoundException(UUID.randomUUID().toString() + " - invalid format");
+        }
     }
 
     private ProfileResponse toResponse(com.github.chunpingwang.ollamaagentoutcome.domain.Profile profile) {
