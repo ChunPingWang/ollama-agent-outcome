@@ -11,11 +11,11 @@ import com.github.chunpingwang.ollamaagentoutcome.application.port.out.SaveProfi
 /**
  * 建立個人資料的 Use Case 實作。
  */
-class CreateProfileService implements com.github.chunpingwang.ollamaagentoutcome.application.port.in.CreateProfileUseCase {
+public class CreateProfileService implements com.github.chunpingwang.ollamaagentoutcome.application.port.in.CreateProfileUseCase {
 
     private final SaveProfilePort saveProfilePort;
 
-    CreateProfileService(SaveProfilePort saveProfilePort) {
+    public CreateProfileService(SaveProfilePort saveProfilePort) {
         this.saveProfilePort = saveProfilePort;
     }
 

@@ -11,11 +11,11 @@ import com.github.chunpingwang.ollamaagentoutcome.application.port.out.LoadProfi
 /**
  * 查詢個人資料的 Use Case 實作。
  */
-class GetProfileService implements com.github.chunpingwang.ollamaagentoutcome.application.port.in.GetProfileUseCase {
+public class GetProfileService implements com.github.chunpingwang.ollamaagentoutcome.application.port.in.GetProfileUseCase {
 
     private final LoadProfilePort loadProfilePort;
 
-    GetProfileService(LoadProfilePort loadProfilePort) {
+    public GetProfileService(LoadProfilePort loadProfilePort) {
         this.loadProfilePort = loadProfilePort;
     }
 

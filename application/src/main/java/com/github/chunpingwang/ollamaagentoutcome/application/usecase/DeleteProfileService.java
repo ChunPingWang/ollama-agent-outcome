@@ -12,12 +12,12 @@ import com.github.chunpingwang.ollamaagentoutcome.application.port.out.DeletePro
 /**
  * 刪除個人資料的 Use Case 實作。
  */
-class DeleteProfileService implements DeleteProfileUseCase {
+public class DeleteProfileService implements DeleteProfileUseCase {
 
     private final LoadProfilePort loadProfilePort;
     private final DeleteProfilePort deleteProfilePort;
 
-    DeleteProfileService(LoadProfilePort loadProfilePort, DeleteProfilePort deleteProfilePort) {
+    public DeleteProfileService(LoadProfilePort loadProfilePort, DeleteProfilePort deleteProfilePort) {
         this.loadProfilePort = Objects.requireNonNull(loadProfilePort);
         this.deleteProfilePort = Objects.requireNonNull(deleteProfilePort);
     }
