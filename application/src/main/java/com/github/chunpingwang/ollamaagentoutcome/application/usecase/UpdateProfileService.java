@@ -30,7 +30,7 @@ public class UpdateProfileService implements UpdateProfileUseCase {
 
         // Domain VO constructors handle validation (Email format, etc.)
         Email email = new Email(request.email());
-        DisplayName displayName = new DisplayName(request.displayName());
+        DisplayName displayName = request.displayName() != null ? new DisplayName(request.displayName()) : null;
 
         profile.setEmail(email);
         profile.setDisplayName(displayName);

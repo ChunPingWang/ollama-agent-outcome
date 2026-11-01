@@ -23,7 +23,7 @@ public class CreateProfileService implements CreateProfileUseCase {
     public void execute(CreateProfileRequest request) {
         ProfileId id = new ProfileId(java.util.UUID.randomUUID().toString());
         Email email = new Email(request.email());
-        DisplayName displayName = new DisplayName(request.displayName());
+        DisplayName displayName = request.displayName() != null ? new DisplayName(request.displayName()) : null;
 
         Profile profile = Profile.create(id, email, displayName);
         
