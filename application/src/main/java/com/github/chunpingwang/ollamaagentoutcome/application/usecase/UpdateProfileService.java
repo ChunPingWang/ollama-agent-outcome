@@ -17,7 +17,7 @@ import java.util.UUID;
 /**
  * 更新個人資料的 Use Case 實作。
  */
-class UpdateProfileService implements UpdateProfileUseCase {
+public class UpdateProfileService implements UpdateProfileUseCase {
 
     private final LoadProfilePort loadProfilePort;
     private final SaveProfilePort saveProfilePort;

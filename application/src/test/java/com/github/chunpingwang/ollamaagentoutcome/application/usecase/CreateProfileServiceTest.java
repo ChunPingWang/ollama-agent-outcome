@@ -1,7 +1,6 @@
 package com.github.chunpingwang.ollamaagentoutcome.application.usecase;
 
 
-
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 import static org.assertj.core.api.Assertions.*;
@@ -39,7 +38,7 @@ class CreateProfileServiceTest {
     @Test
     void should_call_save_port_on_valid_input() {
         // 當呼叫建立時，應正確傳遞參數並呼叫 port
-        doNothing().when(saveProfilePort).save(any(Profile.class));
+        when(saveProfilePort.save(any(Profile.class))).thenReturn(null);
 
         createProfileService.execute(testId, validEmail, displayName);
 

@@ -15,7 +15,7 @@ import java.util.UUID;
 /**
  * 建立個人資料的 Use Case 實作。
  */
-class CreateProfileService implements CreateProfileUseCase {
+public class CreateProfileService implements CreateProfileUseCase {
 
     private final SaveProfilePort saveProfilePort;
 

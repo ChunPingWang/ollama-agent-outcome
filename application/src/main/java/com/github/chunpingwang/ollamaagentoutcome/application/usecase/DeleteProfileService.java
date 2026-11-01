@@ -16,7 +16,7 @@ import java.util.UUID;
 /**
  * 刪除個人資料的 Use Case 實作。
  */
-class DeleteProfileService implements DeleteProfileUseCase {
+public class DeleteProfileService implements DeleteProfileUseCase {
 
     private final LoadProfilePort loadProfilePort;
     private final DeleteProfilePort deleteProfilePort;

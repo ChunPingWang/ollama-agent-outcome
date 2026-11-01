@@ -51,7 +51,7 @@ class UpdateProfileServiceTest {
         Profile existingProfile = new Profile(profileId, email, oldName);
         
         when(loadProfilePort.findById(profileId)).thenReturn(Optional.of(existingProfile));
-        doNothing().when(saveProfilePort).save(any(Profile.class));
+        when(saveProfilePort.save(any(Profile.class))).thenReturn(null);
 
         // 當呼叫更新時，應先載入再儲存
         updateProfileService.execute(testId, validEmail, displayName);
