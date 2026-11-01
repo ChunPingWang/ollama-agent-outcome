@@ -11,6 +11,9 @@ public final class Profile {
     private Email email;
     private DisplayName displayName;
 
+    /**
+     * 私有建構子，強制使用靜態工廠方法建立。
+     */
     private Profile(ProfileId id, Email email, DisplayName displayName) {
         Objects.requireNonNull(id, "id must not be null");
         Objects.requireNonNull(email, "email must not be null");
