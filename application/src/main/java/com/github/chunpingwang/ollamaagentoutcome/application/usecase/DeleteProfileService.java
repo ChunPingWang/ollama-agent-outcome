@@ -13,12 +13,12 @@ import com.github.chunpingwang.ollamaagentoutcome.application.port.out.FindProfi
 /**
  * 刪除個人資料的服務實作。
  */
-class DeleteProfileService implements DeleteProfileUseCase {
+public class DeleteProfileService implements DeleteProfileUseCase {
 
     private final FindProfileByIdPort findProfileByIdPort;
     private final DeleteProfileByIdPort deleteProfileByIdPort;
 
-    DeleteProfileService(FindProfileByIdPort findProfileByIdPort, DeleteProfileByIdPort deleteProfileByIdPort) {
+    public DeleteProfileService(FindProfileByIdPort findProfileByIdPort, DeleteProfileByIdPort deleteProfileByIdPort) {
         this.findProfileByIdPort = findProfileByIdPort;
         this.deleteProfileByIdPort = deleteProfileByIdPort;
     }

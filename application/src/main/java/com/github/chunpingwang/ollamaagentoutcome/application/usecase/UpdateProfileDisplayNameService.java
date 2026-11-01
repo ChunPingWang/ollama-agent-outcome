@@ -14,12 +14,12 @@ import com.github.chunpingwang.ollamaagentoutcome.application.port.out.SaveProfi
 /**
  * 更新顯示名稱的服務實作。
  */
-class UpdateProfileDisplayNameService implements UpdateProfileDisplayNameUseCase {
+public class UpdateProfileDisplayNameService implements UpdateProfileDisplayNameUseCase {
 
     private final FindProfileByIdPort findProfileByIdPort;
     private final SaveProfilePort saveProfilePort;
 
-    UpdateProfileDisplayNameService(FindProfileByIdPort findProfileByIdPort, SaveProfilePort saveProfilePort) {
+    public UpdateProfileDisplayNameService(FindProfileByIdPort findProfileByIdPort, SaveProfilePort saveProfilePort) {
         this.findProfileByIdPort = findProfileByIdPort;
         this.saveProfilePort = saveProfilePort;
     }

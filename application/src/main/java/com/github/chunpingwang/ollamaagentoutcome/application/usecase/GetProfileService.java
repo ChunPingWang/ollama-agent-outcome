@@ -12,11 +12,11 @@ import com.github.chunpingwang.ollamaagentoutcome.application.port.out.FindProfi
 /**
  * 查詢個人資料的服務實作。
  */
-class GetProfileService implements GetProfileUseCase {
+public class GetProfileService implements GetProfileUseCase {
 
     private final FindProfileByIdPort findProfileByIdPort;
 
-    GetProfileService(FindProfileByIdPort findProfileByIdPort) {
+    public GetProfileService(FindProfileByIdPort findProfileByIdPort) {
         this.findProfileByIdPort = findProfileByIdPort;
     }
 
