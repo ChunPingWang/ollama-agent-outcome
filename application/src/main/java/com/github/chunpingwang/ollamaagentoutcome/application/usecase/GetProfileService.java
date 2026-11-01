@@ -1,7 +1,7 @@
 package com.github.chunpingwang.ollamaagentoutcome.application.usecase;
 
 
-
+import com.github.chunpingwang.ollamaagentoutcome.domain.ProfileNotFoundException;
 import com.github.chunpingwang.ollamaagentoutcome.domain.Profile;
 import com.github.chunpingwang.ollamaagentoutcome.application.port.in.GetProfileUseCase;
 import com.github.chunpingwang.ollamaagentoutcome.application.port.out.LoadProfilePort;
@@ -22,7 +22,7 @@ public class GetProfileService implements GetProfileUseCase {
      * {@inheritDoc}
      */
     @Override
-    public Optional<com.github.chunpingwang.ollamaagentoutcome.domain.Profile> execute(String id) {
+    public Optional<Profile> execute(String id) {
         return loadProfilePort.findById(id);
     }
 }
