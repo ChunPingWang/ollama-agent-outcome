@@ -8,4 +8,11 @@ public class DuplicateEmailException extends RuntimeException {
     public DuplicateEmailException(String message) {
         super(message);
     }
+
+    /**
+     * 支援包裝底層異常（例如資料庫唯一約束違反）。
+     */
+    public DuplicateEmailException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }
