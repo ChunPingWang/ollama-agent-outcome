@@ -1,65 +1,31 @@
-# Tasks 001 — Personal Profile CRUD
+# Tasks — personal-profile-crud
 
 ## T1 Domain Model & Value Objects
-- 說明：建立領域層的核心模型與值物件。包含 `ProfileId`、`Email`、`DisplayName` 三個 Value Object，以及 `Profile` Aggregate Root。定義業務規則驗證邏輯於 Value Object 或 Entity 建構子中。同時建立領域例外類別 `InvalidEmailException`、`DuplicateEmailException`、`ProfileNotFoundException`。
-    - `domain/src/main/java/com/github/chunpingwang/ollamaagentoutcome/domain/ProfileId.java`
-    - `domain/src/main/java/com/github/chunpingwang/ollamaagentoutcome/domain/Email.java`
-    - `domain/src/main/java/com/github/chunpingwang/ollamaagentoutcome/domain/DisplayName.java`
-    - `domain/src/main/java/com/github/chunpingwang/ollamaagentoutcome/domain/Profile.java`
-    - `domain/src/main/java/com/github/chunpingwang/ollamaagentoutcome/domain/InvalidEmailException.java`
-    - `domain/src/main/java/com/github/chunpingwang/ollamaagentoutcome/domain/DuplicateEmailException.java`
-    - `domain/src/main/java/com/github/chunpingwang/ollamaagentoutcome/domain/ProfileNotFoundException.java`
-- 測試：
-    - `domain/src/test/java/com/github/chunpingwang/ollamaagentoutcome/domain/ValueObjectTest.java`：驗證 Email 格式（RFC 5322）、非空白；DisplayName 允許 null/空字串但拒絕純空白；ProfileId 不可為 null。
-    - `domain/src/test/java/com/github/chunpingwang/ollamaagentoutcome/domain/DomainEntityTest.java`：驗證 Profile 建立時必須提供有效 Email，更新 DisplayName 的邏輯，以及例外拋出行為。
+- [x] 完成
+- 說明：建立領域層的核心模型與值物件。包含 `ProfileId`、`Email`、`DisplayName` 三個 Value Object，以及 `Profile` Aggregate Root。定義業務規則驗證邏輯於 Value Object 或 Entity 建構子中。同時建立領域例外類別 `InvalidEmailException`、`DuplicateEmailException`、`ProfileNotFoundException`。 - `domain/src/main/java/com/github/chunpingwang/ollamaagentoutcome/domain/ProfileId.java` - `domain/src/main/java/com/github/chunpingwang/ollamaagentoutcome/domain/Email.java` - `domain/src/main/java/com/github/chunpingwang/ollamaagentoutcome/domain/DisplayName.java` - `domain/src/main/java/com/github/chunpingwang/ollamaagentoutcome/domain/Profile.java` - `domain/src/main/java/com/github/chunpingwang/ollamaagentoutcome/domain/InvalidEmailException.java` - `domain/src/main/java/com/github/chunpingwang/ollamaagentoutcome/domain/DuplicateEmailException.java` - `domain/src/main/java/com/github/chunpingwang/ollamaagentoutcome/domain/ProfileNotFoundException.java`
+- 測試：- `domain/src/test/java/com/github/chunpingwang/ollamaagentoutcome/domain/ValueObjectTest.java`：驗證 Email 格式（RFC 5322）、非空白；DisplayName 允許 null/空字串但拒絕純空白；ProfileId 不可為 null。 - `domain/src/test/java/com/github/chunpingwang/ollamaagentoutcome/domain/DomainEntityTest.java`：驗證 Profile 建立時必須提供有效 Email，更新 DisplayName 的邏輯，以及例外拋出行為。
 
 ## T2 Application Ports & Use Cases (Create & Get)
-- 說明：定義 Inbound Port (`CreateProfileUseCase`, `GetProfileUseCase`) 與 Outbound Port (`SaveProfilePort`, `LoadProfilePort`)。實作對應的 Service (`CreateProfileService`, `GetProfileService`)。此階段僅處理「建立」與「查詢」流程，不包含刪除或更新的複雜狀態檢查。
-    - `application/src/main/java/com/github/chunpingwang/ollamaagentoutcome/application/port/in/CreateProfileUseCase.java`
-    - `application/src/main/java/com/github/chunpingwang/ollamaagentoutcome/application/usecase/CreateProfileService.java`
-    - `application/src/main/java/com/github/chunpingwang/ollamaagentoutcome/application/port/in/GetProfileUseCase.java`
-    - `application/src/main/java/com/github/chunpingwang/ollamaagentoutcome/application/usecase/GetProfileService.java`
-    - `application/src/main/java/com/github/chunpingwang/ollamaagentoutcome/application/port/out/SaveProfilePort.java`
-    - `application/src/main/java/com/github/chunpingwang/ollamaagentoutcome/application/port/out/LoadProfilePort.java`
-- 測試：
-    - `application/src/test/java/com/github/chunpingwang/ollamaagentoutcome/application/usecase/CreateProfileServiceTest.java`：使用 Mockito mock `SaveProfilePort`。驗證成功呼叫 save、拋出 `DuplicateEmailException` 時正確傳遞例外、輸入無效時不呼叫 port。
-    - `application/src/test/java/com/github/chunpingwang/ollamaagentoutcome/application/usecase/GetProfileServiceTest.java`：使用 Mockito mock `LoadProfilePort`。驗證找到資料回傳 Optional、找不到資料回傳空 Optional。
+- [x] 完成
+- 說明：定義 Inbound Port (`CreateProfileUseCase`, `GetProfileUseCase`) 與 Outbound Port (`SaveProfilePort`, `LoadProfilePort`)。實作對應的 Service (`CreateProfileService`, `GetProfileService`)。此階段僅處理「建立」與「查詢」流程，不包含刪除或更新的複雜狀態檢查。 - `application/src/main/java/com/github/chunpingwang/ollamaagentoutcome/application/port/in/CreateProfileUseCase.java` - `application/src/main/java/com/github/chunpingwang/ollamaagentoutcome/application/usecase/CreateProfileService.java` - `application/src/main/java/com/github/chunpingwang/ollamaagentoutcome/application/port/in/GetProfileUseCase.java` - `application/src/main/java/com/github/chunpingwang/ollamaagentoutcome/application/usecase/GetProfileService.java` - `application/src/main/java/com/github/chunpingwang/ollamaagentoutcome/application/port/out/SaveProfilePort.java` - `application/src/main/java/com/github/chunpingwang/ollamaagentoutcome/application/port/out/LoadProfilePort.java`
+- 測試：- `application/src/test/java/com/github/chunpingwang/ollamaagentoutcome/application/usecase/CreateProfileServiceTest.java`：使用 Mockito mock `SaveProfilePort`。驗證成功呼叫 save、拋出 `DuplicateEmailException` 時正確傳遞例外、輸入無效時不呼叫 port。 - `application/src/test/java/com/github/chunpingwang/ollamaagentoutcome/application/usecase/GetProfileServiceTest.java`：使用 Mockito mock `LoadProfilePort`。驗證找到資料回傳 Optional、找不到資料回傳空 Optional。
 
 ## T3 Application Use Cases (Update & Delete)
-- 說明：定義剩餘的 Inbound Port (`UpdateProfileUseCase`, `DeleteProfileUseCase`) 與 Outbound Port (`DeleteProfilePort`)，並實作對應 Service。更新流程需先 Load 再 Save；刪除流程需先 Load 確認存在再 Delete。
-    - `application/src/main/java/com/github/chunpingwang/ollamaagentoutcome/application/port/in/UpdateProfileUseCase.java`
-    - `application/src/main/java/com/github/chunpingwang/ollamaagentoutcome/application/usecase/UpdateProfileService.java`
-    - `application/src/main/java/com/github/chunpingwang/ollamaagentoutcome/application/port/in/DeleteProfileUseCase.java`
-    - `application/src/main/java/com/github/chunpingwang/ollamaagentoutcome/application/usecase/DeleteProfileService.java`
-    - `application/src/main/java/com/github/chunpingwang/ollamaagentoutcome/application/port/out/DeleteProfilePort.java`
-- 測試：
-    - `application/src/test/java/com/github/chunpingwang/ollamaagentoutcome/application/usecase/UpdateProfileServiceTest.java`：驗證先呼叫 load、若不存在拋出 `ProfileNotFoundException`、若 save 失敗拋出 `DuplicateEmailException`。
-    - `application/src/test/java/com/github/chunpingwang/ollamaagentoutcome/application/usecase/DeleteProfileServiceTest.java`：驗證先呼叫 load、若不存在拋出例外、成功則呼叫 deleteById。
+- [x] 完成
+- 說明：定義剩餘的 Inbound Port (`UpdateProfileUseCase`, `DeleteProfileUseCase`) 與 Outbound Port (`DeleteProfilePort`)，並實作對應 Service。更新流程需先 Load 再 Save；刪除流程需先 Load 確認存在再 Delete。 - `application/src/main/java/com/github/chunpingwang/ollamaagentoutcome/application/port/in/UpdateProfileUseCase.java` - `application/src/main/java/com/github/chunpingwang/ollamaagentoutcome/application/usecase/UpdateProfileService.java` - `application/src/main/java/com/github/chunpingwang/ollamaagentoutcome/application/port/in/DeleteProfileUseCase.java` - `application/src/main/java/com/github/chunpingwang/ollamaagentoutcome/application/usecase/DeleteProfileService.java` - `application/src/main/java/com/github/chunpingwang/ollamaagentoutcome/application/port/out/DeleteProfilePort.java`
+- 測試：- `application/src/test/java/com/github/chunpingwang/ollamaagentoutcome/application/usecase/UpdateProfileServiceTest.java`：驗證先呼叫 load、若不存在拋出 `ProfileNotFoundException`、若 save 失敗拋出 `DuplicateEmailException`。 - `application/src/test/java/com/github/chunpingwang/ollamaagentoutcome/application/usecase/DeleteProfileServiceTest.java`：驗證先呼叫 load、若不存在拋出例外、成功則呼叫 deleteById。
 
 ## T4 Persistence Adapter & Configuration Assembly
-- 說明：建立 JPA Entity (`ProfileJpaEntity`)，實作 Spring Data Repository (`ProfileJpaRepository`)，並實作 Outbound Port (`JpaSaveProfilePort`, `JpaLoadProfilePort`, `JpaDeleteProfilePort`)。在 Bootstrap 層的 `UseCaseConfiguration` 中組裝所有 Bean（包含 Application Services 與 JPA Ports）。此任務確保應用程式能啟動並連接資料庫。
-    - `adapter-persistence/src/main/java/com/github/chunpingwang/ollamaagentoutcome/adapter/persistence/ProfileJpaEntity.java`
-    - `adapter-persistence/src/main/java/com/github/chunpingwang/ollamaagentoutcome/adapter/persistence/ProfileJpaRepository.java`
-    - `adapter-persistence/src/main/java/com/github/chunpingwang/ollamaagentoutcome/adapter/persistence/JpaSaveProfilePort.java`
-    - `adapter-persistence/src/main/java/com/github/chunpingwang/ollamaagentoutcome/adapter/persistence/JpaLoadProfilePort.java`
-    - `adapter-persistence/src/main/java/com/github/chunpingwang/ollamaagentoutcome/adapter/persistence/JpaDeleteProfilePort.java`
-    - `bootstrap/src/main/java/com/github/chunpingwang/ollamaagentoutcome/bootstrap/UseCaseConfiguration.java` (修改現有檔案以加入新 bean)
-- 測試：
-    - `adapter-persistence/src/test/java/com/github/chunpingwang/ollamaagentoutcome/adapter/persistence/PersistenceIntegrationTest.java`：使用 `@DataJpaTest` + Testcontainers PostgreSQL。驗證 Entity mapping、唯一性約束（重複 Email 拋出 DataIntegrityViolationException）、以及 Port 實作的 CRUD 行為正確性。
+- [x] 完成
+- 說明：建立 JPA Entity (`ProfileJpaEntity`)，實作 Spring Data Repository (`ProfileJpaRepository`)，並實作 Outbound Port (`JpaSaveProfilePort`, `JpaLoadProfilePort`, `JpaDeleteProfilePort`)。在 Bootstrap 層的 `UseCaseConfiguration` 中組裝所有 Bean（包含 Application Services 與 JPA Ports）。此任務確保應用程式能啟動並連接資料庫。 - `adapter-persistence/src/main/java/com/github/chunpingwang/ollamaagentoutcome/adapter/persistence/ProfileJpaEntity.java` - `adapter-persistence/src/main/java/com/github/chunpingwang/ollamaagentoutcome/adapter/persistence/ProfileJpaRepository.java` - `adapter-persistence/src/main/java/com/github/chunpingwang/ollamaagentoutcome/adapter/persistence/JpaSaveProfilePort.java` - `adapter-persistence/src/main/java/com/github/chunpingwang/ollamaagentoutcome/adapter/persistence/JpaLoadProfilePort.java` - `adapter-persistence/src/main/java/com/github/chunpingwang/ollamaagentoutcome/adapter/persistence/JpaDeleteProfilePort.java` - `bootstrap/src/main/java/com/github/chunpingwang/ollamaagentoutcome/bootstrap/UseCaseConfiguration.java` (修改現有檔案以加入新 bean)
+- 測試：- `adapter-persistence/src/test/java/com/github/chunpingwang/ollamaagentoutcome/adapter/persistence/PersistenceIntegrationTest.java`：使用 `@DataJpaTest` + Testcontainers PostgreSQL。驗證 Entity mapping、唯一性約束（重複 Email 拋出 DataIntegrityViolationException）、以及 Port 實作的 CRUD 行為正確性。
 
 ## T5 Web Adapter & Error Handling
-- 說明：建立 REST Controller (`ProfileController`)、Request/Response DTOs (`CreateProfileRequest`, `UpdateProfileRequest`, `ProfileResponse`) 與全域錯誤處理器 (`GlobalExceptionHandler`)。將 HTTP 請求映射至 Application Inbound Ports，並處理例外轉為對應的 HTTP Status Code。
-    - `adapter-web/src/main/java/com/github/chunpingwang/ollamaagentoutcome/adapter/web/ProfileController.java`
-    - `adapter-web/src/main/java/com/github/chunpingwang/ollamaagentoutcome/adapter/web/CreateProfileRequest.java`
-    - `adapter-web/src/main/java/com/github/chunpingwang/ollamaagentoutcome/adapter/web/UpdateProfileRequest.java`
-    - `adapter-web/src/main/java/com/github/chunpingwang/ollamaagentoutcome/adapter/web/ProfileResponse.java`
-    - `adapter-web/src/main/java/com/github/chunpingwang/ollamaagentoutcome/adapter/web/GlobalExceptionHandler.java`
-- 測試：
-    - `adapter-web/src/test/java/com/github/chunpingwang/ollamaagentoutcome/adapter/web/ProfileControllerTest.java`：使用 `@WebMvcTest` + `@MockitoBean` mock Application Use Cases。驗證 POST (201), GET (200/404), PUT (200/404/409), DELETE (204/404) 的狀態碼與 JSON 結構；驗證 DTO 驗證失敗回傳 400。
+- [x] 完成
+- 說明：建立 REST Controller (`ProfileController`)、Request/Response DTOs (`CreateProfileRequest`, `UpdateProfileRequest`, `ProfileResponse`) 與全域錯誤處理器 (`GlobalExceptionHandler`)。將 HTTP 請求映射至 Application Inbound Ports，並處理例外轉為對應的 HTTP Status Code。 - `adapter-web/src/main/java/com/github/chunpingwang/ollamaagentoutcome/adapter/web/ProfileController.java` - `adapter-web/src/main/java/com/github/chunpingwang/ollamaagentoutcome/adapter/web/CreateProfileRequest.java` - `adapter-web/src/main/java/com/github/chunpingwang/ollamaagentoutcome/adapter/web/UpdateProfileRequest.java` - `adapter-web/src/main/java/com/github/chunpingwang/ollamaagentoutcome/adapter/web/ProfileResponse.java` - `adapter-web/src/main/java/com/github/chunpingwang/ollamaagentoutcome/adapter/web/GlobalExceptionHandler.java`
+- 測試：- `adapter-web/src/test/java/com/github/chunpingwang/ollamaagentoutcome/adapter/web/ProfileControllerTest.java`：使用 `@WebMvcTest` + `@MockitoBean` mock Application Use Cases。驗證 POST (201), GET (200/404), PUT (200/404/409), DELETE (204/404) 的狀態碼與 JSON 結構；驗證 DTO 驗證失敗回傳 400。
 
 ## T6 Cucumber BDD Acceptance Tests
-- 說明：撰寫 Cucumber Feature 檔 (`personal-profile-crud.feature`) 與步驟定義 (`ProfileSteps`)，透過 HTTP 呼叫實際 API 進行端到端驗收。確保所有業務規則在整合環境下運作正常。
-    - `bootstrap/src/test/resources/features/personal-profile-crud.feature`
-    - `bootstrap/src/test/java/com/github/chunpingwang/ollamaagentoutcome/bdd/ProfileSteps.java`
-- 測試：
-    - `bootstrap/src/test/java/com/github/chunpingwang/ollamaagentoutcome/bootstrap/CucumberIntegrationTest.java`（或骨架提供的 Runner）：執行 Feature 檔中的 Scenario，驗證 Create、Read、Update、Delete 以及各種錯誤情境（重複 Email、NotFound）皆符合預期。
+- [x] 完成
+- 說明：撰寫 Cucumber Feature 檔 (`personal-profile-crud.feature`) 與步驟定義 (`ProfileSteps`)，透過 HTTP 呼叫實際 API 進行端到端驗收。確保所有業務規則在整合環境下運作正常。 - `bootstrap/src/test/resources/features/personal-profile-crud.feature` - `bootstrap/src/test/java/com/github/chunpingwang/ollamaagentoutcome/bdd/ProfileSteps.java`
+- 測試：- `bootstrap/src/test/java/com/github/chunpingwang/ollamaagentoutcome/bootstrap/CucumberIntegrationTest.java`（或骨架提供的 Runner）：執行 Feature 檔中的 Scenario，驗證 Create、Read、Update、Delete 以及各種錯誤情境（重複 Email、NotFound）皆符合預期。
