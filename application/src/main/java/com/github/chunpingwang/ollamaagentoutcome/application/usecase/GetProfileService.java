@@ -1,11 +1,8 @@
 package com.github.chunpingwang.ollamaagentoutcome.application.usecase;
 
-
-import com.github.chunpingwang.ollamaagentoutcome.domain.Profile;
-import java.util.Optional;
-
 import com.github.chunpingwang.ollamaagentoutcome.application.port.in.GetProfileUseCase;
 import com.github.chunpingwang.ollamaagentoutcome.application.port.out.LoadProfilePort;
+import com.github.chunpingwang.ollamaagentoutcome.domain.ProfileNotFoundException;
 
 /**
  * 查詢個人資料的應用層服務實作。
@@ -19,13 +16,13 @@ public class GetProfileService implements GetProfileUseCase {
     }
 
     @Override
-    public Optional<GetProfileUseCase.Profile> findById(String id) {
-        return loadProfilePort.findById(id).map(profile -> 
-            new GetProfileUseCase.Profile(
-                profile.id().value(),
-                profile.email().address(),
-                profile.displayName() != null ? profile.displayName().name() : null
+    public GetProfileResponse findById(String id) {
+        return loadProfilePort.findById(id).map(domainEntity -> 
+            new GetProfileResponse(
+                domainEntity.id().value(),
+                domainEntity.email().address(),
+                domainEntity.displayName() != null ? domainEntity.displayName().name() : null
             )
-        );
+        ).orElseThrow(() -> new ProfileNotFoundException("profile not found with id: " + id));
     }
 }
