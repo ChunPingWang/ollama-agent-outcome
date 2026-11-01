@@ -26,7 +26,7 @@ public class JpaSaveProfilePort implements SaveProfilePort {
             java.util.Optional<ProfileEntity> existingOpt = repository.findById(profile.id().id());
             
             if (existingOpt.isPresent()) {
-                // 更新：修改受管實體的欄位
+                // 更新：修改受管實體的欄位，避免 isNew() 導致 INSERT 衝突
                 ProfileEntity entity = existingOpt.get();
                 entity.setName(profile.name().value());
                 entity.setEmail(profile.email().value());
