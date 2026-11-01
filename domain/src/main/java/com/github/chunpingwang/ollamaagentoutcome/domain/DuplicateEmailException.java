@@ -6,6 +6,6 @@ package com.github.chunpingwang.ollamaagentoutcome.domain;
 public class DuplicateEmailException extends RuntimeException {
 
     public DuplicateEmailException() {
-        super("Email already exists");
+        super("Duplicate email");
     }
 }

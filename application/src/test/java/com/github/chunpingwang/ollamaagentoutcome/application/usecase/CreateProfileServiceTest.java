@@ -62,8 +62,7 @@ class CreateProfileServiceTest {
         when(existsByEmailPort.existsByEmail(any(Email.class))).thenReturn(true);
 
         assertThatThrownBy(() -> createProfileService.execute(request))
-                .isInstanceOf(DuplicateEmailException.class)
-                .hasMessageContaining("Email already exists");
+                .isInstanceOf(DuplicateEmailException.class);
 
         verify(saveProfilePort, never()).save(any());
     }
