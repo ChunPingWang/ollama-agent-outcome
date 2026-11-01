@@ -27,7 +27,7 @@ public class CreateProfileService implements CreateProfileUseCase {
 
     @Override
     public void execute(CreateProfileRequest request) {
-        Email email = new Email(request.email().value());
+        Email email = request.email();
         DisplayName displayName = request.displayName();
 
         if (existsByEmailPort.existsByEmail(email)) {
